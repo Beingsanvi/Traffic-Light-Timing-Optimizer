@@ -64,7 +64,7 @@
 
             <div class="hero-buttons">
 
-                <button class="primary-btn">
+                <button class="primary-btn" id="launchBtn">
                     LAUNCH SMARTFLOW →
                 </button>
 
@@ -110,6 +110,73 @@
         </div>
 
     </section>
+    <!-- =========================================
+     SMARTFLOW INITIALIZATION POPUP
+========================================= -->
+
+<div class="initialization-overlay" id="initializationOverlay">
+
+    <div class="initialization-card">
+
+        <!-- Logo -->
+        <img
+            src="../Assets/Logo/SmartFlow-logo.png"
+            alt="SmartFlow"
+            class="popup-logo"
+        >
+
+        <!-- Status -->
+        <p class="initializing-text">
+            INITIALIZING SMART TRAFFIC SYSTEM
+        </p>
+
+        <!-- Loading Bar -->
+        <div class="loading-container">
+
+            <div
+                class="loading-bar"
+                id="loadingBar">
+            </div>
+
+        </div>
+
+        <!-- Percentage -->
+        <div
+            class="loading-percentage"
+            id="loadingPercentage">
+
+            0%
+
+        </div>
+
+        <!-- System Tasks -->
+        <div class="loading-status">
+
+            <p id="task1">
+                ○ Analyzing traffic patterns
+            </p>
+
+            <p id="task2">
+                ○ Building optimization engine
+            </p>
+
+            <p id="task3">
+                ○ Connecting urban network
+            </p>
+
+            <p id="task4">
+                ○ Preparing control center
+            </p>
+
+        </div>
+
+        <p class="please-wait">
+            Please wait while SmartFlow initializes...
+        </p>
+
+    </div>
+
+</div>
 
 
     <!-- JS -->

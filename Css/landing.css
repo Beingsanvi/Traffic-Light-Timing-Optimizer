@@ -175,3 +175,404 @@
     margin-right:8px;
     box-shadow:0 0 12px #00F5A0;
 }
+/* =========================================
+   STEP 3 — CINEMATIC ENTRANCE ANIMATIONS
+   ========================================= */
+
+@keyframes smartFlowFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes smartFlowFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Navbar enters first */
+.navbar {
+    animation: smartFlowFadeIn 1s ease forwards;
+}
+
+/* Main hero content */
+.hero-content {
+    animation: smartFlowFadeUp 1s ease 0.25s both;
+}
+
+/* Statistics cards */
+.stats {
+    animation: smartFlowFadeUp 1s ease 0.7s both;
+}
+
+/* System status */
+.system-status {
+    animation: smartFlowFadeIn 1s ease 1.2s both;
+}
+/* =========================================
+   SYSTEM OPERATIONAL ANIMATION
+   ========================================= */
+
+@keyframes systemPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 255, 190, 0.7);
+        opacity: 1;
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(0, 255, 190, 0);
+        opacity: 0.85;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 255, 190, 0);
+        opacity: 1;
+    }
+}
+
+.system-status::before {
+    animation: systemPulse 2s infinite;
+}
+/* =========================================
+   BUTTON MICRO INTERACTIONS
+   ========================================= */
+
+.btn {
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Main SmartFlow button */
+.btn-primary:hover {
+    box-shadow:
+        0 0 20px rgba(0, 255, 190, 0.45),
+        0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Secondary button */
+.btn-secondary:hover {
+    border-color: #00ffc3;
+    color: #00ffc3;
+    box-shadow: 0 0 20px rgba(0, 255, 190, 0.18);
+}
+/* =========================================
+   STAT CARD HOVER
+   ========================================= */
+
+.stat-card {
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(0, 255, 190, 0.55);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(0, 255, 190, 0.12);
+
+    background: rgba(15, 25, 32, 0.85);
+}
+/* =========================================
+   SUBTLE CINEMATIC BACKGROUND MOVEMENT
+   ========================================= */
+
+@keyframes cityZoom {
+    from {
+        background-size: 100% auto;
+    }
+
+    to {
+        background-size: 106% auto;
+    }
+}
+
+.hero {
+    animation: cityZoom 18s ease-in-out infinite alternate;
+}
+/* =========================================
+   FUTURISTIC HERO GLOW
+   ========================================= */
+
+.hero::after {
+    content: "";
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    right: -150px;
+    top: 20%;
+
+    background: radial-gradient(
+        circle,
+        rgba(0, 220, 255, 0.12) 0%,
+        rgba(0, 255, 190, 0.06) 35%,
+        transparent 70%
+    );
+
+    filter: blur(20px);
+
+    pointer-events: none;
+
+    animation: glowMove 8s ease-in-out infinite alternate;
+
+    z-index: 1;
+}
+
+@keyframes glowMove {
+    from {
+        transform: translate(0, 0);
+        opacity: 0.5;
+    }
+
+    to {
+        transform: translate(-80px, 40px);
+        opacity: 1;
+    }
+}
+/* =========================================
+   STEP 4 — INITIALIZATION OVERLAY
+========================================= */
+
+.initialization-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(2, 7, 12, 0.88);
+
+    backdrop-filter: blur(18px);
+}
+
+
+/* =========================================
+   INITIALIZATION CARD
+========================================= */
+
+.initialization-card {
+
+    width: min(520px, 90%);
+
+    padding: 45px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(12, 25, 34, 0.96),
+            rgba(4, 12, 18, 0.96)
+        );
+
+    border:
+        1px solid rgba(0, 245, 160, 0.3);
+
+    box-shadow:
+        0 0 80px rgba(0, 245, 160, 0.12),
+        0 30px 80px rgba(0, 0, 0, 0.5);
+
+    text-align: center;
+
+    animation: popupAppear 0.5s ease;
+}
+
+
+/* =========================================
+   POPUP APPEAR
+========================================= */
+
+@keyframes popupAppear {
+
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+}
+
+
+/* =========================================
+   POPUP LOGO
+========================================= */
+
+.popup-logo {
+
+    width: 230px;
+
+    max-width: 80%;
+
+    height: auto;
+
+    margin-bottom: 28px;
+
+    filter:
+        drop-shadow(
+            0 0 20px rgba(0, 245, 160, 0.18)
+        );
+}
+
+
+/* =========================================
+   INITIALIZING TEXT
+========================================= */
+
+.initializing-text {
+
+    color: #00F5A0;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================
+   LOADING BAR
+========================================= */
+
+.loading-container {
+
+    width: 100%;
+
+    height: 8px;
+
+    margin-top: 28px;
+
+    background: rgba(255,255,255,0.08);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+.loading-bar {
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00B978,
+            #00F5A0
+        );
+
+    box-shadow:
+        0 0 18px rgba(0,245,160,0.5);
+
+    transition:
+        width 0.15s linear;
+}
+
+
+/* =========================================
+   PERCENTAGE
+========================================= */
+
+.loading-percentage {
+
+    margin-top: 12px;
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    color: white;
+}
+
+
+/* =========================================
+   SYSTEM TASKS
+========================================= */
+
+.loading-status {
+
+    margin-top: 28px;
+
+    text-align: left;
+}
+
+
+.loading-status p {
+
+    margin: 13px 0;
+
+    font-size: 13px;
+
+    color: #7f8c98;
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+.loading-status p.completed {
+
+    color: #00F5A0;
+
+    transform: translateX(5px);
+}
+
+
+/* =========================================
+   PLEASE WAIT
+========================================= */
+
+.please-wait {
+
+    margin-top: 25px;
+
+    color: #66737f;
+
+    font-size: 11px;
+
+    letter-spacing: 0.5px;
+}
