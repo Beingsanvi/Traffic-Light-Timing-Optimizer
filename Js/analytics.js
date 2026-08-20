@@ -1,38 +1,9 @@
 // =========================================
-// SMARTFLOW ANALYTICS
+// SMARTFLOW ANALYTICS ENGINE
 // =========================================
 
-console.log("SmartFlow Analytics Loaded");
-
-
-// =========================================
-// GET TRAFFIC DATA
-// =========================================
-
-function getTrafficState() {
-
-    const savedData =
-        localStorage.getItem("smartflowTrafficState");
-
-    if (!savedData) {
-        return null;
-    }
-
-    try {
-
-        return JSON.parse(savedData);
-
-    } catch (error) {
-
-        console.error(
-            "Error reading SmartFlow data:",
-            error
-        );
-
-        return null;
-    }
-}
-
+let densityHistory = [];
+let maxHistoryPoints = 20;
 
 
 // =========================================
@@ -41,201 +12,238 @@ function getTrafficState() {
 
 function updateAnalytics() {
 
-    const data = getTrafficState();
-
-    if (!data) {
-
-        console.log(
-            "Waiting for traffic data..."
-        );
-
+    // Make sure traffic.js is loaded
+    if (typeof trafficState === "undefined") {
         return;
     }
 
 
     // =====================================
-    // 1. TRAFFIC DENSITY
+    // KPI CARDS
     // =====================================
 
-    const densityElement =
-        document.getElementById(
-            "analyticsDensity"
-        );
+    const density =
+        document.getElementById("analyticsDensity");
 
-    if (densityElement) {
+    const vehicles =
+        document.getElementById("analyticsVehicles");
 
-        densityElement.textContent =
-            Math.round(data.density) + "%";
+    const wait =
+        document.getElementById("analyticsWait");
+
+    const score =
+        document.getElementById("analyticsScore");
+
+
+    if (density) {
+        density.textContent =
+            trafficState.density + "%";
+    }
+
+
+    if (vehicles) {
+        vehicles.textContent =
+            trafficState.vehiclesPerHour.toLocaleString();
+    }
+
+
+    if (wait) {
+        wait.textContent =
+            trafficState.waitTime + "s";
+    }
+
+
+    if (score) {
+        score.textContent =
+            trafficState.optimizationScore + "%";
+    }
+
+
+    // =====================================
+    // DIRECTIONAL TRAFFIC
+    // =====================================
+
+    updateAnalyticsDirection(
+        "northValue",
+        "northBar",
+        trafficState.north
+    );
+
+
+    updateAnalyticsDirection(
+        "southValue",
+        "southBar",
+        trafficState.south
+    );
+
+
+    updateAnalyticsDirection(
+        "eastValue",
+        "eastBar",
+        trafficState.east
+    );
+
+
+    updateAnalyticsDirection(
+        "westValue",
+        "westBar",
+        trafficState.west
+    );
+
+
+    // =====================================
+    // BEFORE VS AFTER
+    // =====================================
+
+    const afterDensity =
+        document.getElementById("afterDensity");
+
+    const afterWait =
+        document.getElementById("afterWait");
+
+    const afterScore =
+        document.getElementById("afterScore");
+
+
+    if (afterDensity) {
+
+        afterDensity.textContent =
+            trafficState.density + "%";
 
     }
 
 
+    if (afterWait) {
 
-    // =====================================
-    // 2. VEHICLES / HOUR
-    // =====================================
-
-    const vehicleElement =
-        document.getElementById(
-            "analyticsVehicles"
-        );
-
-    if (vehicleElement) {
-
-        vehicleElement.textContent =
-            Number(
-                data.vehiclesPerHour
-            ).toLocaleString();
+        afterWait.textContent =
+            trafficState.waitTime + "s";
 
     }
 
 
+    if (afterScore) {
 
-    // =====================================
-    // 3. WAIT TIME
-    // =====================================
-
-    const waitElement =
-        document.getElementById(
-            "analyticsWait"
-        );
-
-    if (waitElement) {
-
-        waitElement.textContent =
-            data.waitTime;
+        afterScore.textContent =
+            trafficState.optimizationScore + "%";
 
     }
 
 
-
     // =====================================
-    // 4. OPTIMIZATION SCORE
-    // =====================================
-
-    const scoreElement =
-        document.getElementById(
-            "analyticsScore"
-        );
-
-    if (scoreElement) {
-
-        scoreElement.textContent =
-            data.optimizationScore;
-
-    }
-
-
-
-    // =====================================
-    // 5. DIRECTIONAL TRAFFIC
+    // SIGNAL PERFORMANCE
     // =====================================
 
-    updateDirection(
-        "north",
-        data.traffic.north
-    );
-
-    updateDirection(
-        "south",
-        data.traffic.south
-    );
-
-    updateDirection(
-        "east",
-        data.traffic.east
-    );
-
-    updateDirection(
-        "west",
-        data.traffic.west
-    );
-
-
-
-    // =====================================
-    // 6. BEFORE VS AFTER
-    // =====================================
-
-    updateBeforeAfter(data);
-
-
-
-    // =====================================
-    // 7. SIGNAL PERFORMANCE
-    // =====================================
-
-    const greenElement =
+    const analyticsGreen =
         document.getElementById(
             "analyticsGreen"
         );
 
-    if (greenElement) {
 
-        greenElement.textContent =
-            data.recommendedGreenTime + "s";
-
-    }
-
-
-    const phaseElement =
+    const analyticsPhase =
         document.getElementById(
             "analyticsPhase"
         );
 
-    if (phaseElement) {
 
-        phaseElement.textContent =
-            data.currentDirection;
-
-    }
-
-
-    const changesElement =
+    const signalChanges =
         document.getElementById(
             "signalChanges"
         );
 
-    if (changesElement) {
 
-        changesElement.textContent =
-            data.signalChanges;
+    if (analyticsGreen) {
+
+        analyticsGreen.textContent =
+            trafficState.recommendedGreenTime +
+            "s";
 
     }
 
 
+    if (analyticsPhase) {
+
+        if (
+            trafficState.currentPhase === "NS"
+        ) {
+
+            analyticsPhase.textContent =
+                "NORTH / SOUTH";
+
+        }
+
+        else {
+
+            analyticsPhase.textContent =
+                "EAST / WEST";
+
+        }
+
+    }
+
+
+    if (signalChanges) {
+
+        /*
+            signalChangeCount is created
+            by traffic.js.
+        */
+
+        if (
+            typeof signalChangeCount !==
+            "undefined"
+        ) {
+
+            signalChanges.textContent =
+                signalChangeCount;
+
+        }
+
+    }
+
 
     // =====================================
-    // 8. GRAPH
+    // CHART DATA
     // =====================================
 
-    saveDensityHistory(
-        data.density
+    densityHistory.push(
+        trafficState.density
     );
+
+
+    if (
+        densityHistory.length >
+        maxHistoryPoints
+    ) {
+
+        densityHistory.shift();
+
+    }
+
 
     drawTrafficChart();
 
 }
 
 
-
 // =========================================
 // UPDATE DIRECTION
 // =========================================
 
-function updateDirection(
-    direction,
+function updateAnalyticsDirection(
+    valueId,
+    barId,
     value
 ) {
 
     const valueElement =
         document.getElementById(
-            direction + "Value"
+            valueId
         );
+
 
     const barElement =
         document.getElementById(
-            direction + "Bar"
+            barId
         );
 
 
@@ -250,16 +258,16 @@ function updateDirection(
     if (barElement) {
 
         /*
-            Traffic values are treated
-            as percentages for the
-            visual traffic bars.
+            Maximum simulated traffic
+            per direction = 80.
         */
 
         const percentage =
             Math.min(
-                Number(value),
-                100
+                100,
+                (value / 80) * 100
             );
+
 
         barElement.style.width =
             percentage + "%";
@@ -269,116 +277,8 @@ function updateDirection(
 }
 
 
-
 // =========================================
-// BEFORE VS AFTER
-// =========================================
-
-function updateBeforeAfter(data) {
-
-    const afterDensity =
-        document.getElementById(
-            "afterDensity"
-        );
-
-    const afterWait =
-        document.getElementById(
-            "afterWait"
-        );
-
-    const afterScore =
-        document.getElementById(
-            "afterScore"
-        );
-
-
-    if (afterDensity) {
-
-        afterDensity.textContent =
-            Math.round(data.density) + "%";
-
-    }
-
-
-    if (afterWait) {
-
-        afterWait.textContent =
-            data.waitTime;
-
-    }
-
-
-    if (afterScore) {
-
-        afterScore.textContent =
-            data.optimizationScore;
-
-    }
-
-}
-
-
-
-// =========================================
-// DENSITY HISTORY
-// =========================================
-
-function saveDensityHistory(
-    density
-) {
-
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "smartflowDensityHistory"
-            )
-        );
-
-
-    if (!Array.isArray(history)) {
-
-        history = [];
-
-    }
-
-
-    /*
-        Don't add unlimited points.
-    */
-
-    history.push({
-
-        density:
-            Number(density),
-
-        time:
-            new Date().toLocaleTimeString()
-
-    });
-
-
-    /*
-        Keep last 30 readings.
-    */
-
-    if (history.length > 30) {
-
-        history.shift();
-
-    }
-
-
-    localStorage.setItem(
-        "smartflowDensityHistory",
-        JSON.stringify(history)
-    );
-
-}
-
-
-
-// =========================================
-// DRAW TRAFFIC GRAPH
+// DRAW TRAFFIC CHART
 // =========================================
 
 function drawTrafficChart() {
@@ -390,9 +290,7 @@ function drawTrafficChart() {
 
 
     if (!canvas) {
-
         return;
-
     }
 
 
@@ -400,53 +298,35 @@ function drawTrafficChart() {
         canvas.getContext("2d");
 
 
-    const history =
-        JSON.parse(
-            localStorage.getItem(
-                "smartflowDensityHistory"
-            )
-        ) || [];
-
-
-    if (history.length < 2) {
-
-        return;
-
-    }
-
-
-    /*
-        Canvas size
-    */
-
     const width =
         canvas.clientWidth;
+
 
     const height =
         canvas.clientHeight;
 
 
-    if (
-        canvas.width !==
-        width
-    ) {
+    /*
+        Make canvas match display size.
+    */
 
-        canvas.width = width;
-
-    }
+    const ratio =
+        window.devicePixelRatio || 1;
 
 
-    if (
-        canvas.height !==
-        height
-    ) {
-
-        canvas.height = height;
-
-    }
+    canvas.width =
+        width * ratio;
 
 
-    // Clear graph
+    canvas.height =
+        height * ratio;
+
+
+    ctx.scale(
+        ratio,
+        ratio
+    );
+
 
     ctx.clearRect(
         0,
@@ -456,83 +336,182 @@ function drawTrafficChart() {
     );
 
 
+    // =====================================
+    // CHART SETTINGS
+    // =====================================
+
+    const paddingLeft = 45;
+    const paddingRight = 20;
+    const paddingTop = 20;
+    const paddingBottom = 35;
+
+
+    const chartWidth =
+        width -
+        paddingLeft -
+        paddingRight;
+
+
+    const chartHeight =
+        height -
+        paddingTop -
+        paddingBottom;
+
 
     // =====================================
     // GRID
     // =====================================
 
-    ctx.strokeStyle =
-        "rgba(255,255,255,0.08)";
+    ctx.font =
+        "11px Arial";
 
-    ctx.lineWidth = 1;
+
+    ctx.textAlign =
+        "right";
+
+
+    ctx.textBaseline =
+        "middle";
 
 
     for (
-        let i = 0;
-        i <= 4;
-        i++
+        let value = 0;
+        value <= 100;
+        value += 20
     ) {
 
         const y =
-            height -
-            (i / 4) * height;
+            paddingTop +
+            chartHeight -
+            (value / 100) *
+            chartHeight;
 
 
         ctx.beginPath();
 
+
         ctx.moveTo(
-            0,
+            paddingLeft,
             y
         );
+
 
         ctx.lineTo(
-            width,
+            width - paddingRight,
             y
         );
 
+
+        ctx.strokeStyle =
+            "rgba(255,255,255,0.08)";
+
+
         ctx.stroke();
+
+
+        ctx.fillStyle =
+            "rgba(255,255,255,0.55)";
+
+
+        ctx.fillText(
+            value + "%",
+            paddingLeft - 8,
+            y
+        );
 
     }
 
 
+    // =====================================
+    // NO DATA
+    // =====================================
+
+    if (
+        densityHistory.length === 0
+    ) {
+
+        return;
+
+    }
+
 
     // =====================================
-    // TRAFFIC LINE
+    // CREATE POINTS
+    // =====================================
+
+    const points = [];
+
+
+    densityHistory.forEach(
+        (value, index) => {
+
+            let x;
+
+
+            if (
+                densityHistory.length === 1
+            ) {
+
+                x =
+                    paddingLeft +
+                    chartWidth / 2;
+
+            }
+
+            else {
+
+                x =
+                    paddingLeft +
+                    (
+                        index /
+                        (densityHistory.length - 1)
+                    ) *
+                    chartWidth;
+
+            }
+
+
+            const y =
+                paddingTop +
+                chartHeight -
+                (value / 100) *
+                chartHeight;
+
+
+            points.push({
+                x: x,
+                y: y,
+                value: value
+            });
+
+        }
+    );
+
+
+    // =====================================
+    // DRAW LINE
     // =====================================
 
     ctx.beginPath();
 
 
-    history.forEach(
-        (item, index) => {
-
-            const x =
-                (
-                    index /
-                    (history.length - 1)
-                ) * width;
-
-
-            const y =
-                height -
-                (
-                    Number(item.density) /
-                    100
-                ) * height;
-
+    points.forEach(
+        (point, index) => {
 
             if (index === 0) {
 
                 ctx.moveTo(
-                    x,
-                    y
+                    point.x,
+                    point.y
                 );
 
-            } else {
+            }
+
+            else {
 
                 ctx.lineTo(
-                    x,
-                    y
+                    point.x,
+                    point.y
                 );
 
             }
@@ -542,41 +521,29 @@ function drawTrafficChart() {
 
 
     ctx.strokeStyle =
-        "#00F5A0";
+        "#39d98a";
 
-    ctx.lineWidth = 3;
+
+    ctx.lineWidth =
+        3;
+
 
     ctx.stroke();
 
 
-
     // =====================================
-    // POINTS
+    // DRAW POINTS
     // =====================================
 
-    history.forEach(
-        (item, index) => {
-
-            const x =
-                (
-                    index /
-                    (history.length - 1)
-                ) * width;
-
-
-            const y =
-                height -
-                (
-                    Number(item.density) /
-                    100
-                ) * height;
-
+    points.forEach(
+        point => {
 
             ctx.beginPath();
 
+
             ctx.arc(
-                x,
-                y,
+                point.x,
+                point.y,
                 4,
                 0,
                 Math.PI * 2
@@ -584,52 +551,111 @@ function drawTrafficChart() {
 
 
             ctx.fillStyle =
-                "#00F5A0";
+                "#39d98a";
+
 
             ctx.fill();
 
         }
     );
 
+
+    // =====================================
+    // CURRENT VALUE
+    // =====================================
+
+    const latest =
+        points[points.length - 1];
+
+
+    if (latest) {
+
+        ctx.font =
+            "bold 12px Arial";
+
+
+        ctx.textAlign =
+            "left";
+
+
+        ctx.fillStyle =
+            "#ffffff";
+
+
+        ctx.fillText(
+            latest.value + "%",
+            latest.x + 8,
+            latest.y - 10
+        );
+
+    }
+
 }
 
 
-
 // =========================================
-// FIRST LOAD
-// =========================================
-
-updateAnalytics();
-
-
-
-// =========================================
-// UPDATE EVERY SECOND
+// CHART STATUS
 // =========================================
 
-setInterval(
-    updateAnalytics,
-    1000
+function updateChartStatus() {
+
+    const status =
+        document.getElementById(
+            "chartStatus"
+        );
+
+
+    if (status) {
+
+        status.textContent =
+            "LIVE";
+
+    }
+
+}
+
+
+// =========================================
+// INITIALIZE
+// =========================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /*
+            First update immediately.
+        */
+
+        updateAnalytics();
+
+        updateChartStatus();
+
+
+        /*
+            Refresh analytics every second.
+            traffic.js remains responsible
+            for actually changing traffic.
+        */
+
+        setInterval(
+            updateAnalytics,
+            1000
+        );
+
+    }
 );
 
 
-
 // =========================================
-// UPDATE WHEN LOCAL STORAGE CHANGES
+// RESIZE CHART
 // =========================================
 
 window.addEventListener(
-    "storage",
-    function(event) {
+    "resize",
+    function () {
 
-        if (
-            event.key ===
-            "smartflowTrafficState"
-        ) {
-
-            updateAnalytics();
-
-        }
+        drawTrafficChart();
 
     }
 );

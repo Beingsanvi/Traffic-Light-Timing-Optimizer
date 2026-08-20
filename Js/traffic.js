@@ -882,3 +882,135 @@ document.addEventListener(
 
     }
 );
+// =========================================
+// SMARTFLOW SIGNAL OPTIMIZER
+// =========================================
+
+function optimizeSignalTiming() {
+
+    // Find the busiest direction
+    const directions = {
+        north: trafficState.north,
+        south: trafficState.south,
+        east: trafficState.east,
+        west: trafficState.west
+    };
+
+    let busiestDirection = "north";
+    let highestTraffic = directions.north;
+
+    for (const direction in directions) {
+
+        if (directions[direction] > highestTraffic) {
+
+            highestTraffic = directions[direction];
+            busiestDirection = direction;
+
+        }
+    }
+
+
+    // Calculate optimized green time
+    const optimizedTime =
+        Math.max(
+            20,
+            Math.min(
+                60,
+                Math.round(
+                    20 + highestTraffic * 0.5
+                )
+            )
+        );
+
+
+    // Apply the optimized timing
+    trafficState.recommendedGreenTime =
+        optimizedTime;
+
+    trafficState.currentGreenTime =
+        optimizedTime;
+
+
+    // Update dashboard
+    updateDashboard();
+
+
+    // Show which direction was prioritized
+    showOptimizationMessage(
+        busiestDirection,
+        optimizedTime
+    );
+}
+
+
+// =========================================
+// OPTIMIZATION MESSAGE
+// =========================================
+
+function showOptimizationMessage(
+    direction,
+    time
+) {
+
+    const message =
+        document.getElementById(
+            "optimizationMessage"
+        );
+
+
+    if (!message) {
+        return;
+    }
+
+
+    const directionName =
+        direction.charAt(0).toUpperCase() +
+        direction.slice(1);
+
+
+    message.textContent =
+        directionName +
+        " traffic prioritized • " +
+        time +
+        "s green time";
+
+
+    message.style.opacity = "1";
+
+
+    setTimeout(
+        () => {
+
+            message.style.opacity = "0";
+
+        },
+        4000
+    );
+}
+
+
+// =========================================
+// CONNECT OPTIMIZE BUTTON
+// =========================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const optimizeButton =
+            document.querySelector(
+                ".optimize-btn"
+            );
+
+
+        if (optimizeButton) {
+
+            optimizeButton.addEventListener(
+                "click",
+                optimizeSignalTiming
+            );
+
+        }
+
+    }
+);
