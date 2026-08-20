@@ -1,0 +1,177 @@
+
+.hero {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    background-image: url("../Assets/Backgrounds/city-night-4k.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        90deg,
+        rgba(2, 7, 12, 0.96) 0%,
+        rgba(2, 7, 12, 0.82) 38%,
+        rgba(2, 7, 12, 0.50) 70%,
+        rgba(2, 7, 12, 0.35) 100%
+    );
+
+    z-index: 1;
+}
+
+.navbar{
+    position:relative;
+    z-index:2;
+    height:90px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 70px;
+}
+
+.logo{
+    width:190px;
+    object-fit:contain;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:32px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#d8dee9;
+    font-size:14px;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#00F5A0;
+}
+
+.login-btn{
+    border:1px solid #00F5A0;
+    padding:10px 22px;
+    border-radius:8px;
+    color:#00F5A0 !important;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    padding-left:9%;
+    padding-top:110px;
+    max-width:800px;
+}
+
+.tagline{
+    color:#00F5A0;
+    letter-spacing:4px;
+    font-size:13px;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+.hero-content h1{
+    font-size:72px;
+    line-height:1;
+    letter-spacing:-3px;
+}
+
+.hero-content h1 span{
+    color:#00F5A0;
+}
+
+.description{
+    margin-top:25px;
+    color:#b8c2cc;
+    font-size:17px;
+    line-height:1.7;
+    max-width:600px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:15px;
+    margin-top:35px;
+}
+
+.primary-btn,
+.secondary-btn{
+    padding:15px 24px;
+    border-radius:9px;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.primary-btn{
+    background:#00F5A0;
+    color:#04100A;
+    box-shadow:0 0 25px rgba(0,245,160,.3);
+}
+
+.secondary-btn{
+    background:rgba(255,255,255,.08);
+    color:white;
+    border:1px solid rgba(255,255,255,.2);
+}
+
+.stats{
+    position:absolute;
+    bottom:55px;
+    left:9%;
+    z-index:2;
+    display:flex;
+    gap:18px;
+}
+
+.stat-card{
+    width:165px;
+    padding:18px;
+    border-radius:14px;
+    background:rgba(255,255,255,.06);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.12);
+}
+
+.stat-card h2{
+    color:#00F5A0;
+    font-size:26px;
+}
+
+.stat-card p{
+    margin-top:8px;
+    color:#9DA7B3;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.system-status{
+    position:absolute;
+    right:60px;
+    bottom:60px;
+    z-index:2;
+    color:#00F5A0;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+.dot{
+    width:8px;
+    height:8px;
+    display:inline-block;
+    background:#00F5A0;
+    border-radius:50%;
+    margin-right:8px;
+    box-shadow:0 0 12px #00F5A0;
+}
