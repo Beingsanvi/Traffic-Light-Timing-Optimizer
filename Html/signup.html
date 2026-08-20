@@ -12,11 +12,15 @@
 
     <title>SmartFlow | Create Account</title>
 
+
+    <!-- Global CSS -->
     <link
         rel="stylesheet"
         href="../Css/global.css"
     >
 
+
+    <!-- Authentication CSS -->
     <link
         rel="stylesheet"
         href="../Css/auth.css"
@@ -24,13 +28,23 @@
 
 </head>
 
+
 <body>
+
+    <!-- =========================================
+         AUTHENTICATION PAGE
+    ========================================== -->
 
     <div class="auth-page">
 
+
+        <!-- Background -->
         <div class="auth-background"></div>
 
-        <!-- LOGO -->
+
+        <!-- =====================================
+             SMARTFLOW LOGO
+        ====================================== -->
 
         <a
             href="index.html"
@@ -45,9 +59,14 @@
         </a>
 
 
-        <!-- SIGNUP CARD -->
+        <!-- =====================================
+             SIGNUP CARD
+        ====================================== -->
 
         <div class="auth-card">
+
+
+            <!-- HEADER -->
 
             <div class="auth-header">
 
@@ -55,9 +74,11 @@
                     SMART TRAFFIC CONTROL
                 </span>
 
+
                 <h1>
                     Create Account
                 </h1>
+
 
                 <p>
                     Create your SmartFlow account
@@ -67,9 +88,15 @@
             </div>
 
 
+
+            <!-- =================================
+                 SIGNUP FORM
+            ================================== -->
+
             <form id="signupForm">
 
-                <!-- NAME -->
+
+                <!-- FULL NAME -->
 
                 <div class="input-group">
 
@@ -77,14 +104,17 @@
                         FULL NAME
                     </label>
 
+
                     <input
                         type="text"
                         id="name"
                         placeholder="Enter your name"
+                        autocomplete="name"
                         required
                     >
 
                 </div>
+
 
 
                 <!-- EMAIL -->
@@ -95,14 +125,17 @@
                         EMAIL ADDRESS
                     </label>
 
+
                     <input
                         type="email"
                         id="signupEmail"
                         placeholder="Enter your email"
+                        autocomplete="email"
                         required
                     >
 
                 </div>
+
 
 
                 <!-- PASSWORD -->
@@ -113,14 +146,18 @@
                         PASSWORD
                     </label>
 
+
                     <input
                         type="password"
                         id="signupPassword"
                         placeholder="Create a password"
+                        autocomplete="new-password"
+                        minlength="6"
                         required
                     >
 
                 </div>
+
 
 
                 <!-- CONFIRM PASSWORD -->
@@ -131,17 +168,23 @@
                         CONFIRM PASSWORD
                     </label>
 
+
                     <input
                         type="password"
                         id="confirmPassword"
                         placeholder="Confirm your password"
+                        autocomplete="new-password"
+                        minlength="6"
                         required
                     >
 
                 </div>
 
 
-                <!-- ERROR MESSAGE -->
+
+                <!-- =================================
+                     SIGNUP MESSAGE
+                ================================== -->
 
                 <div
                     id="signupMessage"
@@ -149,7 +192,10 @@
                 ></div>
 
 
-                <!-- CREATE ACCOUNT -->
+
+                <!-- =================================
+                     CREATE ACCOUNT BUTTON
+                ================================== -->
 
                 <button
                     type="submit"
@@ -157,19 +203,34 @@
                 >
 
                     CREATE SMARTFLOW ACCOUNT
-                    <span>→</span>
+
+                    <span>
+                        →
+                    </span>
 
                 </button>
 
             </form>
 
 
+
+            <!-- =================================
+                 DIVIDER
+            ================================== -->
+
             <div class="auth-divider">
 
-                <span>OR</span>
+                <span>
+                    OR
+                </span>
 
             </div>
 
+
+
+            <!-- =================================
+                 LOGIN LINK
+            ================================== -->
 
             <div class="signup-text">
 
@@ -181,6 +242,11 @@
 
             </div>
 
+
+
+            <!-- =================================
+                 SECURITY STATUS
+            ================================== -->
 
             <div class="secure-login">
 
@@ -194,6 +260,11 @@
 
     </div>
 
+
+
+    <!-- =========================================
+         AUTHENTICATION JAVASCRIPT
+    ========================================== -->
 
     <script src="../Js/auth.js"></script>
 

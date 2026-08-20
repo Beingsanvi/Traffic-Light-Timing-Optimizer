@@ -1,15 +1,23 @@
-// =========================================
+// ==========================================
 // SMARTFLOW AUTHENTICATION
-// =========================================
+// LOGIN + SIGNUP + LOGOUT
+// ==========================================
 
 
-// =========================================
+// ==========================================
+// HELPER: SHOW POPUP
+// ==========================================
+
+function showMessage(message) {
+    alert(message);
+}
+
+
+// ==========================================
 // SIGNUP
-// =========================================
+// ==========================================
 
-const signupForm =
-    document.getElementById("signupForm");
-
+const signupForm = document.getElementById("signupForm");
 
 if (signupForm) {
 
@@ -17,14 +25,11 @@ if (signupForm) {
 
         event.preventDefault();
 
-
         const name =
             document.getElementById("name").value.trim();
 
         const email =
-            document.getElementById("signupEmail").value
-                .trim()
-                .toLowerCase();
+            document.getElementById("signupEmail").value.trim().toLowerCase();
 
         const password =
             document.getElementById("signupPassword").value;
@@ -32,62 +37,48 @@ if (signupForm) {
         const confirmPassword =
             document.getElementById("confirmPassword").value;
 
-        const message =
-            document.getElementById("signupMessage");
 
-
-        // =========================================
-        // CHECK PASSWORD
-        // =========================================
-
+        // Check password match
         if (password !== confirmPassword) {
 
-            message.textContent =
-                "Password does not match.";
-
-            message.className =
-                "auth-message error";
+            showMessage("Password does not match.");
 
             return;
         }
 
 
-        // =========================================
-        // GET EXISTING USERS
-        // =========================================
+        // Check password length
+        if (password.length < 6) {
 
-        const users =
-            JSON.parse(
-                localStorage.getItem("smartflowUsers")
-            ) || [];
-
-
-        // =========================================
-        // CHECK DUPLICATE EMAIL
-        // =========================================
-
-        const existingUser =
-            users.find(
-                user => user.email === email
+            showMessage(
+                "Password must contain at least 6 characters."
             );
+
+            return;
+        }
+
+
+        // Get existing users
+        const users =
+            JSON.parse(localStorage.getItem("smartflowUsers")) || [];
+
+
+        // Check duplicate email
+        const existingUser =
+            users.find(user => user.email === email);
 
 
         if (existingUser) {
 
-            message.textContent =
-                "Email already registered. Please sign in.";
-
-            message.className =
-                "auth-message error";
+            showMessage(
+                "This email is already registered."
+            );
 
             return;
         }
 
 
-        // =========================================
-        // CREATE NEW USER
-        // =========================================
-
+        // Create new user
         const newUser = {
 
             name: name,
@@ -99,45 +90,36 @@ if (signupForm) {
         };
 
 
+        // Add user
         users.push(newUser);
 
 
+        // Save users
         localStorage.setItem(
             "smartflowUsers",
             JSON.stringify(users)
         );
 
 
-        // =========================================
-        // SUCCESS
-        // =========================================
-
-        message.textContent =
-            "Account created successfully! Redirecting...";
-
-        message.className =
-            "auth-message success";
+        showMessage(
+            "Account created successfully! You can now sign in."
+        );
 
 
-        setTimeout(() => {
-
-            window.location.href =
-                "login.html";
-
-        }, 1200);
+        // Go to login page
+        window.location.href = "login.html";
 
     });
 
 }
 
 
-// =========================================
+
+// ==========================================
 // LOGIN
-// =========================================
+// ==========================================
 
-const loginForm =
-    document.getElementById("loginForm");
-
+const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
@@ -147,156 +129,122 @@ if (loginForm) {
 
 
         const email =
-            document.getElementById("email").value
-                .trim()
-                .toLowerCase();
+            document.getElementById("email").value.trim().toLowerCase();
 
         const password =
             document.getElementById("password").value;
 
 
-        // =========================================
-        // GET USERS
-        // =========================================
-
+        // Get registered users
         const users =
-            JSON.parse(
-                localStorage.getItem("smartflowUsers")
-            ) || [];
+            JSON.parse(localStorage.getItem("smartflowUsers")) || [];
 
 
-        // =========================================
-        // FIND EMAIL
-        // =========================================
-
+        // Find user by email
         const user =
-            users.find(
-                user => user.email === email
-            );
+            users.find(user => user.email === email);
 
 
-        // =========================================
-        // EMAIL NOT REGISTERED
-        // =========================================
-
+        // Email not registered
         if (!user) {
 
-            showLoginMessage(
-                "Email is not registered."
+            showMessage(
+                "Account not found. Please create an account first."
             );
 
             return;
         }
 
 
-        // =========================================
-        // WRONG PASSWORD
-        // =========================================
-
+        // Wrong password
         if (user.password !== password) {
 
-            showLoginMessage(
-                "Incorrect password."
+            showMessage(
+                "Password does not match."
             );
 
             return;
         }
 
 
-        // =========================================
-        // LOGIN SUCCESS
-        // =========================================
-
+        // Save logged-in user
         localStorage.setItem(
-            "smartflowLoggedIn",
-            "true"
-        );
-
-        localStorage.setItem(
-            "smartflowUser",
-            JSON.stringify(user)
+            "smartflowLoggedInUser",
+            JSON.stringify({
+                name: user.name,
+                email: user.email
+            })
         );
 
 
-        window.location.href =
-            "dashboard.html";
+        // Login successful
+        showMessage(
+            "Login successful! Welcome to SmartFlow."
+        );
+
+
+        // Go to dashboard
+        window.location.href = "dashboard.html";
 
     });
 
 }
 
 
-// =========================================
+
+// ==========================================
 // PASSWORD SHOW / HIDE
-// =========================================
+// ==========================================
 
 const togglePassword =
     document.getElementById("togglePassword");
 
-const loginPassword =
+const passwordInput =
     document.getElementById("password");
 
 
-if (togglePassword && loginPassword) {
+if (togglePassword && passwordInput) {
 
-    togglePassword.addEventListener(
-        "click",
-        () => {
+    togglePassword.addEventListener("click", function () {
 
-            if (
-                loginPassword.type === "password"
-            ) {
+        if (passwordInput.type === "password") {
 
-                loginPassword.type = "text";
+            passwordInput.type = "text";
 
-                togglePassword.textContent =
-                    "HIDE";
+            togglePassword.textContent = "HIDE";
 
-            } else {
+        } else {
 
-                loginPassword.type = "password";
+            passwordInput.type = "password";
 
-                togglePassword.textContent =
-                    "SHOW";
-
-            }
+            togglePassword.textContent = "SHOW";
 
         }
-    );
+
+    });
 
 }
 
 
-// =========================================
-// LOGIN ERROR MESSAGE
-// =========================================
 
-function showLoginMessage(text) {
+// ==========================================
+// LOGOUT
+// ==========================================
 
-    let message =
-        document.getElementById("loginMessage");
-
-
-    if (!message) {
-
-        message =
-            document.createElement("div");
-
-        message.id =
-            "loginMessage";
-
-        message.className =
-            "auth-message error";
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
 
-        loginForm.insertBefore(
-            message,
-            loginForm.querySelector(".auth-submit")
+if (logoutBtn) {
+
+    logoutBtn.addEventListener("click", function () {
+
+        localStorage.removeItem(
+            "smartflowLoggedInUser"
         );
 
-    }
+        window.location.href = "login.html";
 
-
-    message.textContent = text;
+    });
 
 }

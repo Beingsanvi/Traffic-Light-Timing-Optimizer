@@ -1,0 +1,317 @@
+/* =========================================
+   SMARTFLOW ANALYTICS
+========================================= */
+
+.analytics-page {
+    min-height: 100vh;
+    padding: 45px 6%;
+    background: #050b10;
+    color: white;
+}
+
+
+/* HEADER */
+
+.analytics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.analytics-label {
+    color: #00F5A0;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+.analytics-header h1 {
+    font-size: 42px;
+    margin: 10px 0;
+}
+
+.analytics-header p {
+    color: #8995a1;
+    font-size: 15px;
+}
+
+.analytics-live {
+    color: #00F5A0;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.analytics-live span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #00F5A0;
+    border-radius: 50%;
+    margin-right: 7px;
+    box-shadow: 0 0 12px #00F5A0;
+}
+
+
+/* KPI */
+
+.analytics-kpis {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.analytics-card,
+.analytics-panel {
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 16px;
+}
+
+.analytics-card {
+    padding: 24px;
+}
+
+.analytics-card > span {
+    color: #7f8b96;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.analytics-card h2 {
+    margin: 12px 0 8px;
+    color: #00F5A0;
+    font-size: 34px;
+}
+
+.analytics-card small {
+    color: #71808c;
+}
+
+
+/* GRID */
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns:
+        1.5fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.analytics-panel {
+    padding: 25px;
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.panel-heading span {
+    color: #00F5A0;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.panel-heading h2 {
+    margin-top: 8px;
+    font-size: 20px;
+}
+
+
+/* CHART */
+
+.chart-container {
+    height: 280px;
+    position: relative;
+}
+
+#trafficChart {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* DIRECTION */
+
+.direction-row {
+    display: grid;
+    grid-template-columns: 1fr 45px;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 23px;
+}
+
+.direction-row > div > strong {
+    font-size: 11px;
+    color: #aab5bf;
+    letter-spacing: 1px;
+}
+
+.direction-row > strong {
+    color: #00F5A0;
+    text-align: right;
+}
+
+.direction-bar {
+    height: 7px;
+    margin-top: 9px;
+    background: rgba(255,255,255,.08);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.direction-bar span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: #00F5A0;
+    border-radius: 10px;
+    transition: width .5s ease;
+}
+
+
+/* COMPARISON */
+
+.comparison-panel {
+    margin-bottom: 20px;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 20px;
+}
+
+.comparison-item {
+    padding: 22px;
+    background: rgba(255,255,255,.035);
+    border-radius: 12px;
+}
+
+.comparison-item > span {
+    color: #7f8b96;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.comparison-item div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.comparison-item strong {
+    font-size: 25px;
+    color: #8995a1;
+}
+
+.comparison-item .after {
+    color: #00F5A0;
+}
+
+
+/* TIMING */
+
+.timing-stats {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 15px;
+}
+
+.timing-stats div {
+    padding: 18px;
+    background: rgba(255,255,255,.035);
+    border-radius: 10px;
+}
+
+.timing-stats span {
+    display: block;
+    color: #7f8b96;
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.timing-stats strong {
+    color: #00F5A0;
+    font-size: 22px;
+}
+
+
+/* ENGINE STATUS */
+
+.engine-status div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    color: #b5c0ca;
+}
+
+.engine-status strong {
+    margin-left: auto;
+    color: #00F5A0;
+    font-size: 11px;
+}
+
+.status-online {
+    width: 7px;
+    height: 7px;
+    background: #00F5A0;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00F5A0;
+}
+
+
+/* BACK BUTTON */
+
+.back-dashboard {
+    display: inline-block;
+    margin-top: 20px;
+    color: #00F5A0;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .analytics-kpis {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .analytics-kpis {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+}

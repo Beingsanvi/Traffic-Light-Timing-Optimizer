@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SmartFlow | Control Center</title>
+
+    <link
+        rel="stylesheet"
+        href="../Css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../Css/dashboard.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- LOGO -->
+
+        <div class="sidebar-logo">
+
+            <img
+                src="../Assets/Logo/SmartFlow-logo.png"
+                alt="SmartFlow"
+            >
+
+        </div>
+
+
+        <!-- SYSTEM STATUS -->
+
+        <div class="sidebar-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+
+                <strong>
+                    SYSTEM ONLINE
+                </strong>
+
+                <small>
+                    Network connected
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <p class="nav-title">
+                CONTROL CENTER
+            </p>
+
+
+            <a
+                href="dashboard.html"
+                class="nav-item active"
+            >
+
+                <span>◈</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="analytics.html"
+                class="nav-item"
+            >
+
+                <span>◫</span>
+
+                Analytics
+
+            </a>
+
+
+            <a
+                href="#optimizer"
+                class="nav-item"
+            >
+
+                <span>⚙</span>
+
+                Optimizer
+
+            </a>
+
+
+            <p class="nav-title">
+                SYSTEM
+            </p>
+
+
+            <a
+                href="#signals"
+                class="nav-item"
+            >
+
+                <span>🚦</span>
+
+                Signal Network
+
+            </a>
+
+
+            <a
+                href="#emergency"
+                class="nav-item"
+            >
+
+                <span>⚠</span>
+
+                Emergency Mode
+
+            </a>
+
+        </nav>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-bottom">
+
+            <div class="user-mini">
+
+                <div class="user-avatar">
+                    SF
+                </div>
+
+                <div>
+
+                    <strong id="sidebarUser">
+                        SmartFlow User
+                    </strong>
+
+                    <small>
+                        Operator
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="logout-btn"
+                id="logoutBtn"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================
+         MAIN
+    ====================================== -->
+
+    <main class="dashboard-main">
+
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <p class="dashboard-eyebrow">
+                    SMART TRAFFIC MANAGEMENT
+                </p>
+
+                <h1>
+                    Control Center
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Real-time traffic signal optimization
+                    and network intelligence.
+                </p>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <div class="live-indicator">
+
+                    <span></span>
+
+                    LIVE
+
+                </div>
+
+
+                <div class="date-display">
+
+                    <span id="currentTime">
+                        --:--
+                    </span>
+
+                    <small>
+                        Local Network Time
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================
+             KPI CARDS
+        ====================================== -->
+
+        <section class="kpi-grid">
+
+
+            <!-- TRAFFIC DENSITY -->
+
+            <div class="kpi-card">
+
+                <div class="kpi-top">
+
+                    <span>
+                        TRAFFIC DENSITY
+                    </span>
+
+                    <span class="kpi-icon">
+                        ◉
+                    </span>
+
+                </div>
+
+
+                <h2 id="trafficDensity">
+                    0%
+                </h2>
+
+
+                <div class="kpi-progress">
+
+                    <span
+                        id="densityProgress"
+                        style="width:0%"
+                    ></span>
+
+                </div>
+
+
+                <p id="densityStatus">
+                    Calculating traffic...
+                </p>
+
+            </div>
+
+
+
+            <!-- VEHICLES / HOUR -->
+
+            <div class="kpi-card">
+
+                <div class="kpi-top">
+
+                    <span>
+                        VEHICLES / HOUR
+                    </span>
+
+                    <span class="kpi-icon">
+                        ◈
+                    </span>
+
+                </div>
+
+
+                <h2 id="vehicleCount">
+                    0
+                </h2>
+
+
+                <p
+                    id="vehicleTrend"
+                    class="positive"
+                >
+                    Calculating flow...
+                </p>
+
+            </div>
+
+
+
+            <!-- OPTIMIZATION SCORE -->
+
+            <div class="kpi-card">
+
+                <div class="kpi-top">
+
+                    <span>
+                        OPTIMIZATION SCORE
+                    </span>
+
+                    <span class="kpi-icon">
+                        ✦
+                    </span>
+
+                </div>
+
+
+                <h2 id="optimizationScore">
+                    0%
+                </h2>
+
+
+                <p
+                    id="optimizationStatus"
+                    class="positive"
+                >
+                    Waiting for traffic data
+                </p>
+
+            </div>
+
+
+
+            <!-- WAIT TIME -->
+
+            <div class="kpi-card">
+
+                <div class="kpi-top">
+
+                    <span>
+                        AVG WAIT TIME
+                    </span>
+
+                    <span class="kpi-icon">
+                        ◷
+                    </span>
+
+                </div>
+
+
+                <h2 id="waitTime">
+                    0s
+                </h2>
+
+
+                <p
+                    id="waitTrend"
+                    class="positive"
+                >
+                    Calculating delay...
+                </p>
+
+            </div>
+
+        </section>
+        
+
+
+
+        <!-- =====================================
+             MAIN CONTROL GRID
+        ====================================== -->
+
+        <section class="control-grid">
+
+
+            <!-- =================================
+                 LIVE INTERSECTION
+            ================================== -->
+
+            <div class="panel intersection-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            LIVE INTERSECTION
+                        </span>
+
+                        <h2>
+                            Central Avenue × 5th Street
+                        </h2>
+
+                    </div>
+
+
+                    <span class="live-badge">
+                        ● LIVE
+                    </span>
+
+                </div>
+
+
+
+                <!-- INTERSECTION -->
+
+                <div class="intersection">
+
+                    <div class="road horizontal"></div>
+
+                    <div class="road vertical"></div>
+
+
+                    <div class="lane lane-1"></div>
+
+                    <div class="lane lane-2"></div>
+
+                    <div class="lane lane-3"></div>
+
+                    <div class="lane lane-4"></div>
+
+
+                    <!-- LEFT SIGNAL -->
+
+                    <div class="traffic-light light-left">
+
+                        <span class="red"></span>
+
+                        <span class="yellow"></span>
+
+                        <span class="green active-light"></span>
+
+                    </div>
+
+
+                    <!-- RIGHT SIGNAL -->
+
+                    <div class="traffic-light light-right">
+
+                        <span class="red active-light"></span>
+
+                        <span class="yellow"></span>
+
+                        <span class="green"></span>
+
+                    </div>
+
+
+                    <!-- CARS -->
+
+                    <div class="car car-1"></div>
+
+                    <div class="car car-2"></div>
+
+                    <div class="car car-3"></div>
+
+                    <div class="car car-4"></div>
+
+
+                    <!-- CENTER -->
+
+                    <div class="intersection-center">
+
+                        <span>
+                            SIGNAL
+                        </span>
+
+                        <strong id="signalCountdown">
+                            30
+                        </strong>
+
+                        <small>
+                            SEC
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SIGNAL STATUS -->
+
+                <div class="signal-status-row">
+
+
+                    <div>
+
+                        <span
+                            class="signal-dot green-dot"
+                            id="northSouthDot"
+                        ></span>
+
+                        NORTH / SOUTH
+
+                        <strong id="northSouthStatus">
+                            GO
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span
+                            class="signal-dot red-dot"
+                            id="eastWestDot"
+                        ></span>
+
+                        EAST / WEST
+
+                        <strong id="eastWestStatus">
+                            STOP
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================
+                 AI OPTIMIZER
+            ================================== -->
+
+            <div
+                class="panel optimizer-panel"
+                id="optimizer"
+            >
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            AI OPTIMIZATION
+                        </span>
+
+                        <h2>
+                            Signal Timing
+                        </h2>
+
+                    </div>
+
+
+                    <span class="optimizer-status">
+                        READY
+                    </span>
+
+                </div>
+
+
+
+                <!-- TIMING -->
+
+                <div class="timing-display">
+
+
+                    <div class="timing-ring">
+
+                        <div>
+
+                            <strong id="greenTime">
+                                30
+                            </strong>
+
+                            <span>
+                                SEC
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="timing-info">
+
+                        <p>
+                            Recommended Green Time
+                        </p>
+
+
+                        <strong id="recommendedTime">
+                            30 seconds
+                        </strong>
+
+
+                        <small>
+                            Calculated from current traffic
+                            density and vehicle flow.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OPTIMIZATION DETAILS -->
+
+                <div class="optimization-details">
+
+
+                    <div>
+
+                        <span>
+                            Current
+                        </span>
+
+                        <strong id="currentGreenTime">
+                            30s
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Recommended
+                        </span>
+
+                        <strong
+                            class="green-text"
+                            id="recommendedGreenTime"
+                        >
+                            30s
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Improvement
+                        </span>
+
+                        <strong
+                            class="green-text"
+                            id="improvementTime"
+                        >
+                            +0s
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- OPTIMIZE BUTTON -->
+
+                <button
+                    class="optimize-btn"
+                    id="optimizeBtn"
+                >
+
+                    ✦ OPTIMIZE SIGNAL TIMING
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             LIVE DIRECTIONAL TRAFFIC
+        ====================================== -->
+
+        <section class="panel directional-panel">
+
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="panel-label">
+                        LIVE TRAFFIC FLOW
+                    </span>
+
+                    <h2>
+                        Directional Traffic
+                    </h2>
+
+                </div>
+
+
+                <span class="live-badge">
+                    ● LIVE
+                </span>
+
+            </div>
+
+
+
+            <!-- NORTH -->
+
+            <div class="direction-row">
+
+                <div class="direction-info">
+
+                    <span>
+                        NORTH
+                    </span>
+
+                    <strong id="northTraffic">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="direction-bar">
+
+                    <span
+                        id="northBar"
+                        style="width:0%"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SOUTH -->
+
+            <div class="direction-row">
+
+                <div class="direction-info">
+
+                    <span>
+                        SOUTH
+                    </span>
+
+                    <strong id="southTraffic">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="direction-bar">
+
+                    <span
+                        id="southBar"
+                        style="width:0%"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EAST -->
+
+            <div class="direction-row">
+
+                <div class="direction-info">
+
+                    <span>
+                        EAST
+                    </span>
+
+                    <strong id="eastTraffic">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="direction-bar">
+
+                    <span
+                        id="eastBar"
+                        style="width:0%"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- WEST -->
+
+            <div class="direction-row">
+
+                <div class="direction-info">
+
+                    <span>
+                        WEST
+                    </span>
+
+                    <strong id="westTraffic">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="direction-bar">
+
+                    <span
+                        id="westBar"
+                        style="width:0%"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             NETWORK + ACTIVITY
+        ====================================== -->
+
+        <section class="bottom-grid">
+
+
+            <!-- SIGNAL NETWORK -->
+
+            <div
+                class="panel network-panel"
+                id="signals"
+            >
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            SIGNAL NETWORK
+                        </span>
+
+                        <h2>
+                            Intersection Status
+                        </h2>
+
+                    </div>
+
+
+                    <span class="network-count">
+                        12 ACTIVE
+                    </span>
+
+                </div>
+
+
+
+                <div class="signal-list">
+
+
+                    <!-- CENTRAL -->
+
+                    <div class="signal-row">
+
+                        <div class="intersection-name">
+
+                            <span
+                                class="mini-signal green"
+                            ></span>
+
+                            <div>
+
+                                <strong>
+                                    Central Ave × 5th
+                                </strong>
+
+                                <small>
+                                    Intersection #001
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="signal-state green-state">
+                            OPTIMAL
+                        </span>
+
+
+                        <strong>
+                            87%
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- MARKET -->
+
+                    <div class="signal-row">
+
+                        <div class="intersection-name">
+
+                            <span
+                                class="mini-signal yellow"
+                            ></span>
+
+                            <div>
+
+                                <strong>
+                                    Market St × 3rd
+                                </strong>
+
+                                <small>
+                                    Intersection #002
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="signal-state yellow-state">
+                            MONITOR
+                        </span>
+
+
+                        <strong>
+                            71%
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- PARK -->
+
+                    <div class="signal-row">
+
+                        <div class="intersection-name">
+
+                            <span
+                                class="mini-signal green"
+                            ></span>
+
+                            <div>
+
+                                <strong>
+                                    Park Ave × 8th
+                                </strong>
+
+                                <small>
+                                    Intersection #003
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="signal-state green-state">
+                            OPTIMAL
+                        </span>
+
+
+                        <strong>
+                            92%
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- MAIN -->
+
+                    <div class="signal-row">
+
+                        <div class="intersection-name">
+
+                            <span
+                                class="mini-signal red"
+                            ></span>
+
+                            <div>
+
+                                <strong>
+                                    Main St × 2nd
+                                </strong>
+
+                                <small>
+                                    Intersection #004
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <span class="signal-state red-state">
+                            HIGH LOAD
+                        </span>
+
+
+                        <strong>
+                            48%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIVITY -->
+
+            <div class="panel activity-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            SYSTEM ACTIVITY
+                        </span>
+
+                        <h2>
+                            Recent Events
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="activity-list">
+
+
+                    <div class="activity">
+
+                        <span class="activity-icon green">
+                            ✓
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Signal optimized
+                            </strong>
+
+                            <small>
+                                Central Ave · 2 min ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="activity">
+
+                        <span class="activity-icon blue">
+                            ◈
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Traffic pattern detected
+                            </strong>
+
+                            <small>
+                                Market St · 7 min ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="activity">
+
+                        <span class="activity-icon yellow">
+                            !
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                High traffic detected
+                            </strong>
+
+                            <small>
+                                Main St · 12 min ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="activity">
+
+                        <span class="activity-icon green">
+                            ✓
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Network synchronized
+                            </strong>
+
+                            <small>
+                                All intersections · 18 min ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             FOOTER
+        ====================================== -->
+
+        <footer class="dashboard-footer">
+
+            <span>
+                SMARTFLOW TRAFFIC INTELLIGENCE
+            </span>
+
+            <span>
+                EVALUATION BUILD · v1.0
+            </span>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =====================================
+     JAVASCRIPT
+====================================== -->
+
+<script src="../Js/traffic.js"></script>
+<script src="../Js/dashboard.js"></script>
+</body>
+
+</html>

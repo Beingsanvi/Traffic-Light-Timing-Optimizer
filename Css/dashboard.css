@@ -1,0 +1,1600 @@
+/* =========================================
+   SMARTFLOW DASHBOARD
+========================================= */
+
+body {
+    background: #03070b;
+    color: white;
+}
+
+
+/* =========================================
+   DASHBOARD LAYOUT
+========================================= */
+
+.dashboard {
+    min-height: 100vh;
+    display: flex;
+    background:
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(0,245,160,0.04),
+            transparent 30%
+        ),
+        #03070b;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar {
+    width: 245px;
+    min-height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 28px 18px;
+
+    background:
+        rgba(5,12,18,0.96);
+
+    border-right:
+        1px solid rgba(255,255,255,0.07);
+
+    z-index: 10;
+}
+
+
+.sidebar-logo {
+    padding: 0 12px 28px;
+}
+
+
+.sidebar-logo img {
+    width: 160px;
+}
+
+
+/* =========================================
+   SIDEBAR STATUS
+========================================= */
+
+.sidebar-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(0,245,160,0.05);
+
+    border:
+        1px solid rgba(0,245,160,0.12);
+
+    margin-bottom: 30px;
+}
+
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #00F5A0;
+
+    box-shadow:
+        0 0 12px #00F5A0;
+}
+
+
+.sidebar-status strong {
+    display: block;
+
+    font-size: 9px;
+
+    color: #00F5A0;
+
+    letter-spacing: 1px;
+}
+
+
+.sidebar-status small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #64717c;
+
+    font-size: 9px;
+}
+
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.nav-title {
+    margin: 18px 12px 10px;
+
+    color: #4f5c67;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+}
+
+
+.nav-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 12px;
+
+    margin: 4px 0;
+
+    border-radius: 9px;
+
+    color: #7d8993;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    transition:
+        color .25s ease,
+        background .25s ease,
+        transform .25s ease;
+}
+
+
+.nav-item span {
+    width: 20px;
+
+    text-align: center;
+
+    font-size: 15px;
+}
+
+
+.nav-item:hover {
+    color: white;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    transform: translateX(3px);
+}
+
+
+.nav-item.active {
+    color: #00F5A0;
+
+    background:
+        rgba(0,245,160,0.08);
+
+    border:
+        1px solid rgba(0,245,160,0.12);
+}
+
+
+/* =========================================
+   SIDEBAR BOTTOM
+========================================= */
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+
+.user-mini {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.07);
+
+    padding-top: 20px;
+}
+
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    color: #02100a;
+
+    background: #00F5A0;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+.user-mini strong {
+    display: block;
+
+    font-size: 11px;
+}
+
+
+.user-mini small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #596671;
+
+    font-size: 9px;
+}
+
+
+.logout-btn {
+    width: 100%;
+
+    padding: 9px;
+
+    margin-top: 8px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background:
+        rgba(255,255,255,0.04);
+
+    color: #687580;
+
+    cursor: pointer;
+}
+
+
+.logout-btn:hover {
+    color: #ff7070;
+
+    background:
+        rgba(255,70,70,0.06);
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.dashboard-main {
+    width: calc(100% - 245px);
+
+    margin-left: 245px;
+
+    padding: 35px 42px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.dashboard-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-bottom: 32px;
+}
+
+
+.dashboard-eyebrow {
+    color: #00F5A0;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+.dashboard-header h1 {
+    margin-top: 7px;
+
+    font-size: 34px;
+
+    letter-spacing: -1px;
+}
+
+
+.dashboard-subtitle {
+    margin-top: 8px;
+
+    color: #65727e;
+
+    font-size: 12px;
+}
+
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+}
+
+
+.live-indicator {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 7px;
+
+    color: #00F5A0;
+
+    background:
+        rgba(0,245,160,0.06);
+
+    border:
+        1px solid rgba(0,245,160,0.15);
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+
+.live-indicator span {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #00F5A0;
+
+    box-shadow:
+        0 0 10px #00F5A0;
+}
+
+
+.date-display {
+    text-align: right;
+}
+
+
+.date-display span {
+    display: block;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+.date-display small {
+    color: #56636d;
+
+    font-size: 8px;
+}
+
+
+/* =========================================
+   KPI
+========================================= */
+
+.kpi-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+}
+
+
+.kpi-card {
+    padding: 20px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease;
+}
+
+
+.kpi-card:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(0,245,160,0.25);
+}
+
+
+.kpi-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #65727e;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+.kpi-icon {
+    color: #00F5A0;
+
+    font-size: 15px;
+}
+
+
+.kpi-card h2 {
+    margin-top: 15px;
+
+    font-size: 30px;
+}
+
+
+.kpi-card p {
+    margin-top: 10px;
+
+    color: #65727e;
+
+    font-size: 9px;
+}
+
+
+.positive {
+    color: #00F5A0 !important;
+}
+
+
+.kpi-progress {
+    width: 100%;
+
+    height: 4px;
+
+    margin-top: 14px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    overflow: hidden;
+}
+
+
+.kpi-progress span {
+    display: block;
+
+    height: 100%;
+
+    border-radius: 10px;
+
+    background: #00F5A0;
+
+    box-shadow:
+        0 0 10px rgba(0,245,160,0.4);
+}
+
+
+/* =========================================
+   PANELS
+========================================= */
+
+.control-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.6fr 1fr;
+
+    gap: 18px;
+
+    margin-bottom: 18px;
+}
+
+
+.bottom-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.6fr 1fr;
+
+    gap: 18px;
+}
+
+
+.panel {
+    padding: 22px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+    overflow: hidden;
+}
+
+
+.panel-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    margin-bottom: 20px;
+}
+
+
+.panel-label {
+    color: #596772;
+
+    font-size: 8px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.7px;
+}
+
+
+.panel-header h2 {
+    margin-top: 6px;
+
+    font-size: 17px;
+}
+
+
+.live-badge,
+.optimizer-status,
+.network-count {
+    color: #00F5A0;
+
+    font-size: 8px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    padding: 6px 9px;
+
+    border-radius: 6px;
+
+    background:
+        rgba(0,245,160,0.06);
+
+    border:
+        1px solid rgba(0,245,160,0.12);
+}
+
+
+/* =========================================
+   INTERSECTION
+========================================= */
+
+.intersection {
+    position: relative;
+
+    height: 285px;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,245,160,0.04),
+            transparent 45%
+        ),
+        #071017;
+}
+
+
+.road {
+    position: absolute;
+
+    background:
+        #141c22;
+}
+
+
+.road.horizontal {
+    left: 0;
+    right: 0;
+
+    top: 38%;
+
+    height: 110px;
+}
+
+
+.road.vertical {
+    top: 0;
+    bottom: 0;
+
+    left: 40%;
+
+    width: 110px;
+}
+
+
+/* Road center markings */
+
+.lane {
+    position: absolute;
+
+    background:
+        rgba(255,255,255,0.15);
+}
+
+
+.lane-1,
+.lane-2 {
+    width: 35px;
+
+    height: 2px;
+
+    left: 5%;
+
+    top: 48%;
+}
+
+
+.lane-2 {
+    left: 75%;
+}
+
+
+.lane-3,
+.lane-4 {
+    width: 2px;
+
+    height: 35px;
+
+    top: 8%;
+
+    left: 47%;
+}
+
+
+.lane-4 {
+    top: 80%;
+}
+
+
+/* =========================================
+   TRAFFIC LIGHTS
+========================================= */
+
+.traffic-light {
+    position: absolute;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 7px;
+
+    border-radius: 8px;
+
+    background: #05080b;
+
+    border:
+        1px solid rgba(255,255,255,0.15);
+
+    z-index: 5;
+}
+
+
+.traffic-light span {
+    width: 11px;
+
+    height: 11px;
+
+    border-radius: 50%;
+
+    background: #242c31;
+}
+
+
+.traffic-light .red.active-light {
+    background: #ff4c4c;
+
+    box-shadow:
+        0 0 15px #ff4c4c;
+}
+
+
+.traffic-light .green.active-light {
+    background: #00F5A0;
+
+    box-shadow:
+        0 0 15px #00F5A0;
+}
+
+
+.light-left {
+    left: 33%;
+
+    top: 29%;
+}
+
+
+.light-right {
+    right: 33%;
+
+    bottom: 29%;
+}
+
+
+/* =========================================
+   CARS
+========================================= */
+
+.car {
+    position: absolute;
+
+    width: 17px;
+
+    height: 30px;
+
+    border-radius: 4px;
+
+    background:
+        #3b5662;
+
+    box-shadow:
+        0 0 10px rgba(0,0,0,.5);
+
+    z-index: 4;
+}
+
+
+.car-1 {
+    left: 20%;
+
+    top: 47%;
+
+    animation:
+        carMove1 5s linear infinite;
+}
+
+
+.car-2 {
+    right: 18%;
+
+    top: 56%;
+
+    transform: rotate(180deg);
+
+    animation:
+        carMove2 6s linear infinite;
+}
+
+
+.car-3 {
+    left: 45%;
+
+    top: 12%;
+
+    transform: rotate(90deg);
+
+    animation:
+        carMove3 5s linear infinite;
+}
+
+
+.car-4 {
+    left: 54%;
+
+    bottom: 8%;
+
+    transform: rotate(-90deg);
+
+    animation:
+        carMove4 6s linear infinite;
+}
+
+
+@keyframes carMove1 {
+
+    from {
+        left: 10%;
+    }
+
+    to {
+        left: 34%;
+    }
+
+}
+
+
+@keyframes carMove2 {
+
+    from {
+        right: 10%;
+    }
+
+    to {
+        right: 34%;
+    }
+
+}
+
+
+@keyframes carMove3 {
+
+    from {
+        top: 5%;
+    }
+
+    to {
+        top: 28%;
+    }
+
+}
+
+
+@keyframes carMove4 {
+
+    from {
+        bottom: 5%;
+    }
+
+    to {
+        bottom: 28%;
+    }
+
+}
+
+
+/* =========================================
+   CENTER SIGNAL
+========================================= */
+
+.intersection-center {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 80px;
+    height: 80px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(3,10,14,.95);
+
+    border:
+        1px solid rgba(0,245,160,.2);
+
+    box-shadow:
+        0 0 30px rgba(0,245,160,.08);
+
+    z-index: 6;
+}
+
+
+.intersection-center span {
+    color: #53616c;
+
+    font-size: 7px;
+
+    letter-spacing: 1px;
+}
+
+
+.intersection-center strong {
+    margin-top: 3px;
+
+    color: #00F5A0;
+
+    font-size: 27px;
+}
+
+
+.intersection-center small {
+    color: #53616c;
+
+    font-size: 7px;
+}
+
+
+/* =========================================
+   SIGNAL STATUS
+========================================= */
+
+.signal-status-row {
+    display: flex;
+
+    justify-content: space-around;
+
+    margin-top: 16px;
+
+    padding-top: 14px;
+
+    border-top:
+        1px solid rgba(255,255,255,.06);
+
+    color: #7a8791;
+
+    font-size: 9px;
+}
+
+
+.signal-status-row div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.signal-status-row strong {
+    color: white;
+
+    margin-left: 4px;
+}
+
+
+.signal-dot {
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+}
+
+
+.green-dot {
+    background: #00F5A0;
+
+    box-shadow:
+        0 0 8px #00F5A0;
+}
+
+
+.red-dot {
+    background: #ff4c4c;
+
+    box-shadow:
+        0 0 8px #ff4c4c;
+}
+
+
+/* =========================================
+   OPTIMIZER
+========================================= */
+
+.timing-display {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    padding: 20px 0;
+}
+
+
+.timing-ring {
+    width: 120px;
+    height: 120px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #08151a 55%,
+            transparent 56%
+        );
+
+    border:
+        6px solid rgba(0,245,160,.12);
+
+    border-top-color:
+        #00F5A0;
+
+    border-right-color:
+        #00F5A0;
+
+    box-shadow:
+        0 0 30px rgba(0,245,160,.08);
+}
+
+
+.timing-ring div {
+    text-align: center;
+}
+
+
+.timing-ring strong {
+    display: block;
+
+    color: #00F5A0;
+
+    font-size: 32px;
+}
+
+
+.timing-ring span {
+    color: #596772;
+
+    font-size: 8px;
+}
+
+
+.timing-info p {
+    color: #7b8892;
+
+    font-size: 10px;
+}
+
+
+.timing-info strong {
+    display: block;
+
+    margin-top: 7px;
+
+    font-size: 20px;
+}
+
+
+.timing-info small {
+    display: block;
+
+    max-width: 190px;
+
+    margin-top: 8px;
+
+    color: #56636d;
+
+    line-height: 1.5;
+
+    font-size: 9px;
+}
+
+
+.optimization-details {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 8px;
+
+    margin-top: 5px;
+}
+
+
+.optimization-details div {
+    padding: 11px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+.optimization-details span {
+    display: block;
+
+    color: #596772;
+
+    font-size: 8px;
+}
+
+
+.optimization-details strong {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 13px;
+}
+
+
+.green-text {
+    color: #00F5A0;
+}
+
+
+.optimize-btn {
+    width: 100%;
+
+    margin-top: 16px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    color: #02100a;
+
+    background: #00F5A0;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.optimize-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 0 25px rgba(0,245,160,.35);
+}
+
+
+/* =========================================
+   SIGNAL NETWORK
+========================================= */
+
+.signal-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.signal-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr 90px 45px;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.05);
+}
+
+
+.intersection-name {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.intersection-name strong {
+    display: block;
+
+    font-size: 10px;
+}
+
+
+.intersection-name small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #53616c;
+
+    font-size: 8px;
+}
+
+
+.mini-signal {
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+}
+
+
+.mini-signal.green {
+    background: #00F5A0;
+
+    box-shadow:
+        0 0 8px #00F5A0;
+}
+
+
+.mini-signal.yellow {
+    background: #ffc857;
+
+    box-shadow:
+        0 0 8px #ffc857;
+}
+
+
+.mini-signal.red {
+    background: #ff4c4c;
+
+    box-shadow:
+        0 0 8px #ff4c4c;
+}
+
+
+.signal-state {
+    font-size: 7px;
+
+    font-weight: bold;
+
+    letter-spacing: .5px;
+}
+
+
+.green-state {
+    color: #00F5A0;
+}
+
+
+.yellow-state {
+    color: #ffc857;
+}
+
+
+.red-state {
+    color: #ff6464;
+}
+
+
+.signal-row > strong {
+    text-align: right;
+
+    font-size: 10px;
+}
+
+
+/* =========================================
+   ACTIVITY
+========================================= */
+
+.activity {
+    display: flex;
+
+    gap: 12px;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.05);
+}
+
+
+.activity-icon {
+    width: 27px;
+    height: 27px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+}
+
+
+.activity-icon.green {
+    color: #00F5A0;
+
+    background:
+        rgba(0,245,160,.08);
+}
+
+
+.activity-icon.blue {
+    color: #5ecbff;
+
+    background:
+        rgba(94,203,255,.08);
+}
+
+
+.activity-icon.yellow {
+    color: #ffc857;
+
+    background:
+        rgba(255,200,87,.08);
+}
+
+
+.activity strong {
+    display: block;
+
+    font-size: 10px;
+}
+
+
+.activity small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #56636d;
+
+    font-size: 8px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.dashboard-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 25px;
+
+    padding: 15px 0;
+
+    border-top:
+        1px solid rgba(255,255,255,.05);
+
+    color: #3f4b54;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .dashboard-main {
+        width: calc(100% - 210px);
+
+        margin-left: 210px;
+
+        padding: 25px;
+    }
+
+    .kpi-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .control-grid,
+    .bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .dashboard-main {
+        width: 100%;
+
+        margin-left: 0;
+
+        padding: 20px;
+    }
+
+    .dashboard-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-right {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+}
+/* =========================================
+   LIVE DIRECTIONAL TRAFFIC
+========================================= */
+
+.directional-panel {
+    margin-top: 20px;
+    padding: 24px;
+}
+
+.direction-row {
+    margin-top: 22px;
+}
+
+.direction-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.direction-info span {
+    color: #9DA7B3;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.direction-info strong {
+    color: #00F5A0;
+    font-size: 16px;
+}
+
+.direction-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.direction-bar span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: #00F5A0;
+    border-radius: 20px;
+    transition: width 0.6s ease;
+}
+/* =========================================
+   SMARTFLOW LIVE TRAFFIC ANIMATIONS
+========================================= */
+
+@keyframes carMoveHorizontal {
+
+    0% {
+        transform: translateX(-120px);
+    }
+
+    50% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(120px);
+    }
+
+}
+
+
+@keyframes carMoveVertical {
+
+    0% {
+        transform: translateY(-120px);
+    }
+
+    50% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(120px);
+    }
+
+}
+
+
+/* Smooth signal light transition */
+
+.traffic-light span {
+
+    transition:
+        opacity 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+
+.active-light {
+
+    transform: scale(1.15);
+
+}
+
+
+/* Moving cars */
+
+.car {
+
+    transition:
+        transform 0.5s ease;
+
+}
