@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SmartFlow | Create Account</title>
+
+    <link
+        rel="stylesheet"
+        href="../Css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../Css/auth.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="auth-page">
+
+        <div class="auth-background"></div>
+
+        <!-- LOGO -->
+
+        <a
+            href="index.html"
+            class="auth-logo"
+        >
+
+            <img
+                src="../Assets/Logo/SmartFlow-logo.png"
+                alt="SmartFlow Logo"
+            >
+
+        </a>
+
+
+        <!-- SIGNUP CARD -->
+
+        <div class="auth-card">
+
+            <div class="auth-header">
+
+                <span class="auth-tag">
+                    SMART TRAFFIC CONTROL
+                </span>
+
+                <h1>
+                    Create Account
+                </h1>
+
+                <p>
+                    Create your SmartFlow account
+                    to access the control center.
+                </p>
+
+            </div>
+
+
+            <form id="signupForm">
+
+                <!-- NAME -->
+
+                <div class="input-group">
+
+                    <label for="name">
+                        FULL NAME
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="input-group">
+
+                    <label for="signupEmail">
+                        EMAIL ADDRESS
+                    </label>
+
+                    <input
+                        type="email"
+                        id="signupEmail"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-group">
+
+                    <label for="signupPassword">
+                        PASSWORD
+                    </label>
+
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="input-group">
+
+                    <label for="confirmPassword">
+                        CONFIRM PASSWORD
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ERROR MESSAGE -->
+
+                <div
+                    id="signupMessage"
+                    class="auth-message"
+                ></div>
+
+
+                <!-- CREATE ACCOUNT -->
+
+                <button
+                    type="submit"
+                    class="auth-submit"
+                >
+
+                    CREATE SMARTFLOW ACCOUNT
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            <div class="auth-divider">
+
+                <span>OR</span>
+
+            </div>
+
+
+            <div class="signup-text">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Sign In
+                </a>
+
+            </div>
+
+
+            <div class="secure-login">
+
+                <span class="secure-dot"></span>
+
+                SECURE SMARTFLOW CONNECTION
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../Js/auth.js"></script>
+
+</body>
+
+</html>

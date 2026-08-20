@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SmartFlow | Sign In</title>
+
+    <link
+        rel="stylesheet"
+        href="../Css/global.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../Css/auth.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="auth-page">
+
+        <!-- Background overlay -->
+        <div class="auth-background"></div>
+
+
+        <!-- Top Logo -->
+        <a
+            href="index.html"
+            class="auth-logo"
+        >
+
+            <img
+                src="../Assets/Logo/SmartFlow-logo.png"
+                alt="SmartFlow Logo"
+            >
+
+        </a>
+
+
+        <!-- Login Card -->
+        <div class="auth-card">
+
+            <!-- Header -->
+            <div class="auth-header">
+
+                <span class="auth-tag">
+                    SMART TRAFFIC CONTROL
+                </span>
+
+                <h1>
+                    Welcome Back
+                </h1>
+
+                <p>
+                    Sign in to access your SmartFlow
+                    optimization control center.
+                </p>
+
+            </div>
+
+
+            <!-- =====================================
+                 LOGIN FORM
+            ====================================== -->
+
+            <form id="loginForm">
+
+
+                <!-- EMAIL -->
+                <div class="input-group">
+
+                    <label for="email">
+                        EMAIL ADDRESS
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+                <div class="input-group">
+
+                    <div class="password-label">
+
+                        <label for="password">
+                            PASSWORD
+                        </label>
+
+                        <a href="#">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="password-toggle"
+                        >
+                            SHOW
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     LOGIN ERROR MESSAGE
+                ====================================== -->
+
+                <div
+                    id="loginMessage"
+                    class="auth-message"
+                ></div>
+
+
+                <!-- REMEMBER ME -->
+                <div class="remember-row">
+
+                    <label>
+
+                        <input
+                            type="checkbox"
+                            id="remember"
+                        >
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+                <button
+                    type="submit"
+                    class="auth-submit"
+                >
+
+                    SIGN IN TO SMARTFLOW
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- =====================================
+                 DIVIDER
+            ====================================== -->
+
+            <div class="auth-divider">
+
+                <span>
+                    OR
+                </span>
+
+            </div>
+
+
+            <!-- =====================================
+                 CREATE ACCOUNT
+            ====================================== -->
+
+            <div class="signup-text">
+
+                Don't have an account?
+
+                <a href="signup.html">
+                    Create Account
+                </a>
+
+            </div>
+
+
+            <!-- =====================================
+                 SECURITY STATUS
+            ====================================== -->
+
+            <div class="secure-login">
+
+                <span class="secure-dot"></span>
+
+                SECURE SMARTFLOW CONNECTION
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="../Js/auth.js"></script>
+
+</body>
+
+</html>

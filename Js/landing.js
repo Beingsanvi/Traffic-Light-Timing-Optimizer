@@ -109,6 +109,7 @@ launchBtn.addEventListener("click", () => {
                     console.log(
                         "SmartFlow initialization complete"
                     );
+                    window.location.href = "login.html";
 
                 }, 800);
 
