@@ -2,7 +2,11 @@
 // SMARTFLOW ADAPTIVE TRAFFIC ENGINE
 // =========================================
 
-// Traffic data
+
+// =========================================
+// MAIN TRAFFIC STATE
+// =========================================
+
 const trafficState = {
 
     north: 25,
@@ -15,11 +19,9 @@ const trafficState = {
     waitTime: 0,
     optimizationScore: 0,
 
-    // Signal timing
     currentGreenTime: 30,
     recommendedGreenTime: 30,
 
-    // Signal system
     currentPhase: "NS",
     signalCountdown: 30
 
@@ -27,7 +29,495 @@ const trafficState = {
 
 
 // =========================================
-// CALCULATE TRAFFIC
+// MULTI-INTERSECTION NETWORK
+// =========================================
+
+const intersectionNetwork = {
+
+    central: {
+
+        id: "001",
+
+        name: "Central Ave × 5th",
+
+        north: 25,
+        south: 20,
+        east: 35,
+        west: 30,
+
+        density: 0,
+        waitTime: 0,
+        optimizationScore: 0,
+
+        currentPhase: "NS",
+        greenTime: 30
+
+    },
+
+
+    market: {
+
+        id: "002",
+
+        name: "Market St × 3rd",
+
+        north: 40,
+        south: 35,
+        east: 55,
+        west: 45,
+
+        density: 0,
+        waitTime: 0,
+        optimizationScore: 0,
+
+        currentPhase: "EW",
+        greenTime: 35
+
+    },
+
+
+    park: {
+
+        id: "003",
+
+        name: "Park Ave × 8th",
+
+        north: 20,
+        south: 25,
+        east: 30,
+        west: 25,
+
+        density: 0,
+        waitTime: 0,
+        optimizationScore: 0,
+
+        currentPhase: "NS",
+        greenTime: 30
+
+    },
+
+
+    main: {
+
+        id: "004",
+
+        name: "Main St × 2nd",
+
+        north: 60,
+        south: 55,
+        east: 65,
+        west: 60,
+
+        density: 0,
+        waitTime: 0,
+        optimizationScore: 0,
+
+        currentPhase: "EW",
+        greenTime: 45
+
+    }
+
+};
+
+
+// =========================================
+// CALCULATE NETWORK METRICS
+// =========================================
+
+function calculateNetworkMetrics() {
+
+    Object.values(intersectionNetwork).forEach(
+        intersection => {
+
+            const totalVehicles =
+                intersection.north +
+                intersection.south +
+                intersection.east +
+                intersection.west;
+
+
+            // -----------------------------
+            // DENSITY
+            // -----------------------------
+
+            const maximumVehicles =
+                80 * 4;
+
+
+            intersection.density =
+                Math.min(
+                    100,
+                    Math.round(
+                        (
+                            totalVehicles /
+                            maximumVehicles
+                        ) * 100
+                    )
+                );
+
+
+            // -----------------------------
+            // WAIT TIME
+            // -----------------------------
+
+            intersection.waitTime =
+                Math.max(
+                    5,
+                    Math.round(
+                        8 +
+                        intersection.density * 0.45
+                    )
+                );
+
+
+            // -----------------------------
+            // DIRECTION LOAD
+            // -----------------------------
+
+            const northSouth =
+                intersection.north +
+                intersection.south;
+
+
+            const eastWest =
+                intersection.east +
+                intersection.west;
+
+
+            const imbalance =
+                Math.abs(
+                    northSouth -
+                    eastWest
+                );
+
+
+            // -----------------------------
+            // OPTIMIZATION SCORE
+            // -----------------------------
+
+            intersection.optimizationScore =
+                Math.max(
+                    45,
+                    Math.min(
+                        98,
+                        Math.round(
+                            100 -
+                            imbalance * 0.4
+                        )
+                    )
+                );
+
+
+            // -----------------------------
+            // GREEN TIME
+            // -----------------------------
+
+            intersection.greenTime =
+                Math.max(
+                    20,
+                    Math.min(
+                        60,
+                        Math.round(
+                            25 +
+                            intersection.density * 0.35
+                        )
+                    )
+                );
+
+        }
+    );
+
+}
+
+
+// =========================================
+// SIMULATE NETWORK TRAFFIC
+// =========================================
+
+function simulateNetworkTraffic() {
+
+    Object.values(intersectionNetwork).forEach(
+        intersection => {
+
+            intersection.north =
+                randomNetworkTraffic(
+                    intersection.north
+                );
+
+
+            intersection.south =
+                randomNetworkTraffic(
+                    intersection.south
+                );
+
+
+            intersection.east =
+                randomNetworkTraffic(
+                    intersection.east
+                );
+
+
+            intersection.west =
+                randomNetworkTraffic(
+                    intersection.west
+                );
+
+        }
+    );
+
+
+    calculateNetworkMetrics();
+
+    updateNetworkDisplay();
+
+}
+
+
+// =========================================
+// RANDOM NETWORK TRAFFIC
+// =========================================
+
+function randomNetworkTraffic(
+    currentValue
+) {
+
+    const change =
+        Math.floor(
+            Math.random() * 15
+        ) - 7;
+
+
+    return Math.max(
+        0,
+        Math.min(
+            80,
+            currentValue + change
+        )
+    );
+
+}
+
+
+// =========================================
+// UPDATE NETWORK DISPLAY
+// =========================================
+
+function updateNetworkDisplay() {
+
+    const intersections =
+        Object.values(
+            intersectionNetwork
+        );
+
+
+    let totalDensity = 0;
+
+    let highest =
+        null;
+
+
+    intersections.forEach(
+        intersection => {
+
+            totalDensity +=
+                intersection.density;
+
+
+            if (
+                highest === null ||
+                intersection.density >
+                highest.density
+            ) {
+
+                highest =
+                    intersection;
+
+            }
+
+
+            // =================================
+            // SCORE
+            // =================================
+
+            const scoreElement =
+                document.getElementById(
+                    `network-score-${intersection.id}`
+                );
+
+
+            if (scoreElement) {
+
+                scoreElement.textContent =
+                    intersection.optimizationScore +
+                    "%";
+
+            }
+
+
+            // =================================
+            // STATUS
+            // =================================
+
+            const statusElement =
+                document.getElementById(
+                    `network-status-${intersection.id}`
+                );
+
+
+            if (statusElement) {
+
+                statusElement.classList.remove(
+                    "green-state",
+                    "yellow-state",
+                    "red-state"
+                );
+
+
+                if (
+                    intersection.density >= 80
+                ) {
+
+                    statusElement.textContent =
+                        "HIGH LOAD";
+
+                    statusElement.classList.add(
+                        "red-state"
+                    );
+
+                }
+
+                else if (
+                    intersection.density >= 60
+                ) {
+
+                    statusElement.textContent =
+                        "MONITOR";
+
+                    statusElement.classList.add(
+                        "yellow-state"
+                    );
+
+                }
+
+                else {
+
+                    statusElement.textContent =
+                        "OPTIMAL";
+
+                    statusElement.classList.add(
+                        "green-state"
+                    );
+
+                }
+
+            }
+
+
+            // =================================
+            // MINI SIGNAL
+            // =================================
+
+            const signalElement =
+                document.getElementById(
+                    `network-signal-${intersection.id}`
+                );
+
+
+            if (signalElement) {
+
+                signalElement.classList.remove(
+                    "green",
+                    "yellow",
+                    "red"
+                );
+
+
+                if (
+                    intersection.density >= 80
+                ) {
+
+                    signalElement.classList.add(
+                        "red"
+                    );
+
+                }
+
+                else if (
+                    intersection.density >= 60
+                ) {
+
+                    signalElement.classList.add(
+                        "yellow"
+                    );
+
+                }
+
+                else {
+
+                    signalElement.classList.add(
+                        "green"
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+
+    // =====================================
+    // NETWORK DENSITY
+    // =====================================
+
+    const networkDensity =
+        document.getElementById(
+            "networkDensity"
+        );
+
+
+    if (
+        networkDensity &&
+        intersections.length > 0
+    ) {
+
+        networkDensity.textContent =
+            Math.round(
+                totalDensity /
+                intersections.length
+            ) + "%";
+
+    }
+
+
+    // =====================================
+    // HIGHEST LOAD
+    // =====================================
+
+    const highestLoad =
+        document.getElementById(
+            "networkHighestLoad"
+        );
+
+
+    if (
+        highestLoad &&
+        highest
+    ) {
+
+        highestLoad.textContent =
+            highest.name +
+            " · " +
+            highest.density +
+            "%";
+
+    }
+
+}
+
+
+// =========================================
+// CALCULATE MAIN INTERSECTION
 // =========================================
 
 function calculateTraffic() {
@@ -44,7 +534,9 @@ function calculateTraffic() {
     // =====================================
 
     trafficState.vehiclesPerHour =
-        Math.round(totalVehicles * 18);
+        Math.round(
+            totalVehicles * 18
+        );
 
 
     // =====================================
@@ -54,7 +546,12 @@ function calculateTraffic() {
     trafficState.density =
         Math.min(
             100,
-            Math.round((totalVehicles / 280) * 100)
+            Math.round(
+                (
+                    totalVehicles /
+                    280
+                ) * 100
+            )
         );
 
 
@@ -66,7 +563,8 @@ function calculateTraffic() {
         Math.max(
             5,
             Math.round(
-                8 + trafficState.density * 0.45
+                8 +
+                trafficState.density * 0.45
             )
         );
 
@@ -111,7 +609,7 @@ function calculateTraffic() {
 
 
 // =========================================
-// SIMULATE TRAFFIC
+// SIMULATE MAIN TRAFFIC
 // =========================================
 
 function simulateTraffic() {
@@ -119,11 +617,14 @@ function simulateTraffic() {
     trafficState.north =
         randomTraffic(10, 70);
 
+
     trafficState.south =
         randomTraffic(10, 70);
 
+
     trafficState.east =
         randomTraffic(10, 70);
+
 
     trafficState.west =
         randomTraffic(10, 70);
@@ -135,20 +636,24 @@ function simulateTraffic() {
 
 
 // =========================================
-// RANDOM TRAFFIC
+// RANDOM MAIN TRAFFIC
 // =========================================
 
-function randomTraffic(min, max) {
+function randomTraffic(
+    min,
+    max
+) {
 
     return Math.floor(
-        Math.random() * (max - min + 1)
+        Math.random() *
+        (max - min + 1)
     ) + min;
 
 }
 
 
 // =========================================
-// GET DIRECTIONAL LOAD
+// GET NORTH / SOUTH LOAD
 // =========================================
 
 function getNorthSouthTraffic() {
@@ -160,6 +665,10 @@ function getNorthSouthTraffic() {
 
 }
 
+
+// =========================================
+// GET EAST / WEST LOAD
+// =========================================
 
 function getEastWestTraffic() {
 
@@ -180,32 +689,39 @@ function chooseBestPhase() {
     const northSouth =
         getNorthSouthTraffic();
 
+
     const eastWest =
         getEastWestTraffic();
 
 
-    // Give GREEN to direction
-    // having more traffic.
-
-    if (northSouth > eastWest) {
+    if (
+        northSouth >
+        eastWest
+    ) {
 
         return "NS";
 
     }
 
-    else if (eastWest > northSouth) {
+
+    if (
+        eastWest >
+        northSouth
+    ) {
 
         return "EW";
 
     }
 
 
-    // If equal traffic,
-    // alternate the phase.
+    // Equal traffic:
+    // alternate phase
 
-    return trafficState.currentPhase === "NS"
-        ? "EW"
-        : "NS";
+    return (
+        trafficState.currentPhase === "NS"
+            ? "EW"
+            : "NS"
+    );
 
 }
 
@@ -223,9 +739,6 @@ function startNewPhase() {
     trafficState.currentPhase =
         nextPhase;
 
-
-    // Use recommended green time
-    // for the new phase.
 
     trafficState.currentGreenTime =
         trafficState.recommendedGreenTime;
@@ -249,19 +762,11 @@ function runSignalTimer() {
     trafficState.signalCountdown--;
 
 
-    // If timer reaches zero,
-    // choose a new direction.
-
     if (
         trafficState.signalCountdown <= 0
     ) {
 
-        // Recalculate traffic first
         calculateTraffic();
-
-
-        // Then choose the direction
-        // with higher traffic.
 
         startNewPhase();
 
@@ -281,9 +786,9 @@ function runSignalTimer() {
 
 function updateSignalDisplay() {
 
-    // -------------------------------------
+    // =====================================
     // COUNTDOWN
-    // -------------------------------------
+    // =====================================
 
     const countdown =
         document.getElementById(
@@ -299,9 +804,9 @@ function updateSignalDisplay() {
     }
 
 
-    // -------------------------------------
-    // SIGNAL LIGHTS
-    // -------------------------------------
+    // =====================================
+    // LIGHTS
+    // =====================================
 
     const leftLight =
         document.querySelector(
@@ -335,9 +840,9 @@ function updateSignalDisplay() {
     }
 
 
-    // -------------------------------------
+    // =====================================
     // STATUS TEXT
-    // -------------------------------------
+    // =====================================
 
     const statusElements =
         document.querySelectorAll(
@@ -345,7 +850,9 @@ function updateSignalDisplay() {
         );
 
 
-    if (statusElements.length >= 2) {
+    if (
+        statusElements.length >= 2
+    ) {
 
         if (
             trafficState.currentPhase === "NS"
@@ -353,6 +860,7 @@ function updateSignalDisplay() {
 
             statusElements[0].textContent =
                 "GO";
+
 
             statusElements[1].textContent =
                 "STOP";
@@ -363,6 +871,7 @@ function updateSignalDisplay() {
 
             statusElements[0].textContent =
                 "STOP";
+
 
             statusElements[1].textContent =
                 "GO";
@@ -384,16 +893,22 @@ function setSignalLight(
 ) {
 
     const red =
-        light.querySelector(".red");
+        light.querySelector(
+            ".red"
+        );
+
 
     const yellow =
-        light.querySelector(".yellow");
+        light.querySelector(
+            ".yellow"
+        );
+
 
     const green =
-        light.querySelector(".green");
+        light.querySelector(
+            ".green"
+        );
 
-
-    // Remove active state
 
     if (red) {
 
@@ -403,6 +918,7 @@ function setSignalLight(
 
     }
 
+
     if (yellow) {
 
         yellow.classList.remove(
@@ -410,6 +926,7 @@ function setSignalLight(
         );
 
     }
+
 
     if (green) {
 
@@ -419,8 +936,6 @@ function setSignalLight(
 
     }
 
-
-    // Activate correct light
 
     if (isGreen) {
 
@@ -486,7 +1001,8 @@ function updateDashboard() {
     if (density) {
 
         density.textContent =
-            trafficState.density + "%";
+            trafficState.density +
+            "%";
 
     }
 
@@ -503,7 +1019,8 @@ function updateDashboard() {
     if (waitTime) {
 
         waitTime.textContent =
-            trafficState.waitTime + "s";
+            trafficState.waitTime +
+            "s";
 
     }
 
@@ -511,7 +1028,8 @@ function updateDashboard() {
     if (optimizationScore) {
 
         optimizationScore.textContent =
-            trafficState.optimizationScore + "%";
+            trafficState.optimizationScore +
+            "%";
 
     }
 
@@ -529,7 +1047,8 @@ function updateDashboard() {
     if (densityProgress) {
 
         densityProgress.style.width =
-            trafficState.density + "%";
+            trafficState.density +
+            "%";
 
     }
 
@@ -775,10 +1294,6 @@ function updateDashboard() {
     }
 
 
-    // =====================================
-    // UPDATE SIGNAL
-    // =====================================
-
     updateSignalDisplay();
 
 }
@@ -828,6 +1343,143 @@ function updateDirection(
 
 
 // =========================================
+// SIGNAL OPTIMIZER
+// =========================================
+
+function optimizeSignalTiming() {
+
+    const northSouth =
+        getNorthSouthTraffic();
+
+
+    const eastWest =
+        getEastWestTraffic();
+
+
+    // Calculate based on the
+    // busiest signal phase.
+
+    const busiestLoad =
+        Math.max(
+            northSouth,
+            eastWest
+        );
+
+
+    const optimizedTime =
+        Math.max(
+            20,
+            Math.min(
+                60,
+                Math.round(
+                    20 +
+                    busiestLoad * 0.25
+                )
+            )
+        );
+
+
+    trafficState.recommendedGreenTime =
+        optimizedTime;
+
+
+    trafficState.currentGreenTime =
+        optimizedTime;
+
+
+    // Give green to the busier phase
+
+    if (
+        northSouth >
+        eastWest
+    ) {
+
+        trafficState.currentPhase =
+            "NS";
+
+    }
+
+    else if (
+        eastWest >
+        northSouth
+    ) {
+
+        trafficState.currentPhase =
+            "EW";
+
+    }
+
+
+    trafficState.signalCountdown =
+        optimizedTime;
+
+
+    updateDashboard();
+
+
+    const button =
+        document.querySelector(
+            ".optimize-btn"
+        );
+
+
+    if (button) {
+
+        const originalText =
+            "✦ OPTIMIZE SIGNAL TIMING";
+
+
+        button.textContent =
+            "OPTIMIZING...";
+
+
+        setTimeout(
+            () => {
+
+                button.textContent =
+                    originalText;
+
+            },
+            800
+        );
+
+    }
+
+}
+
+
+// =========================================
+// CONNECT OPTIMIZER BUTTON
+// =========================================
+
+function connectOptimizer() {
+
+    const optimizeButton =
+        document.getElementById(
+            "optimizeBtn"
+        );
+
+
+    if (
+        optimizeButton &&
+        !optimizeButton.dataset.connected
+    ) {
+
+        optimizeButton.dataset.connected =
+            "true";
+
+
+        optimizeButton.addEventListener(
+            "click",
+            optimizeSignalTiming
+        );
+
+    }
+
+}
+
+
+// =========================================
 // INITIALIZE SMARTFLOW
 // =========================================
 
@@ -835,18 +1487,16 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
-        // First calculate traffic
+        // =================================
+        // MAIN INTERSECTION
+        // =================================
 
         calculateTraffic();
 
 
-        // Select the best initial phase
-
         trafficState.currentPhase =
             chooseBestPhase();
 
-
-        // Start with recommended timing
 
         trafficState.currentGreenTime =
             trafficState.recommendedGreenTime;
@@ -856,13 +1506,27 @@ document.addEventListener(
             trafficState.currentGreenTime;
 
 
-        // Update everything
-
         updateDashboard();
 
 
         // =================================
-        // TRAFFIC CHANGES EVERY 3 SECONDS
+        // MULTI-INTERSECTION NETWORK
+        // =================================
+
+        calculateNetworkMetrics();
+
+        updateNetworkDisplay();
+
+
+        // =================================
+        // CONNECT BUTTON
+        // =================================
+
+        connectOptimizer();
+
+
+        // =================================
+        // TRAFFIC UPDATE
         // =================================
 
         setInterval(
@@ -872,145 +1536,23 @@ document.addEventListener(
 
 
         // =================================
-        // SIGNAL TIMER EVERY 1 SECOND
+        // NETWORK UPDATE
+        // =================================
+
+        setInterval(
+            simulateNetworkTraffic,
+            3000
+        );
+
+
+        // =================================
+        // SIGNAL TIMER
         // =================================
 
         setInterval(
             runSignalTimer,
             1000
         );
-
-    }
-);
-// =========================================
-// SMARTFLOW SIGNAL OPTIMIZER
-// =========================================
-
-function optimizeSignalTiming() {
-
-    // Find the busiest direction
-    const directions = {
-        north: trafficState.north,
-        south: trafficState.south,
-        east: trafficState.east,
-        west: trafficState.west
-    };
-
-    let busiestDirection = "north";
-    let highestTraffic = directions.north;
-
-    for (const direction in directions) {
-
-        if (directions[direction] > highestTraffic) {
-
-            highestTraffic = directions[direction];
-            busiestDirection = direction;
-
-        }
-    }
-
-
-    // Calculate optimized green time
-    const optimizedTime =
-        Math.max(
-            20,
-            Math.min(
-                60,
-                Math.round(
-                    20 + highestTraffic * 0.5
-                )
-            )
-        );
-
-
-    // Apply the optimized timing
-    trafficState.recommendedGreenTime =
-        optimizedTime;
-
-    trafficState.currentGreenTime =
-        optimizedTime;
-
-
-    // Update dashboard
-    updateDashboard();
-
-
-    // Show which direction was prioritized
-    showOptimizationMessage(
-        busiestDirection,
-        optimizedTime
-    );
-}
-
-
-// =========================================
-// OPTIMIZATION MESSAGE
-// =========================================
-
-function showOptimizationMessage(
-    direction,
-    time
-) {
-
-    const message =
-        document.getElementById(
-            "optimizationMessage"
-        );
-
-
-    if (!message) {
-        return;
-    }
-
-
-    const directionName =
-        direction.charAt(0).toUpperCase() +
-        direction.slice(1);
-
-
-    message.textContent =
-        directionName +
-        " traffic prioritized • " +
-        time +
-        "s green time";
-
-
-    message.style.opacity = "1";
-
-
-    setTimeout(
-        () => {
-
-            message.style.opacity = "0";
-
-        },
-        4000
-    );
-}
-
-
-// =========================================
-// CONNECT OPTIMIZE BUTTON
-// =========================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        const optimizeButton =
-            document.querySelector(
-                ".optimize-btn"
-            );
-
-
-        if (optimizeButton) {
-
-            optimizeButton.addEventListener(
-                "click",
-                optimizeSignalTiming
-            );
-
-        }
 
     }
 );
