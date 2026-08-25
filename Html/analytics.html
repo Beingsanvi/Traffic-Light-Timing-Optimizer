@@ -27,343 +27,301 @@
 
 <body>
 
-    <div class="analytics-page">
+<div class="analytics-page">
 
 
-        <!-- =====================================
-             HEADER
-        ====================================== -->
+    <!-- =====================================
+         HEADER
+    ====================================== -->
 
-        <header class="analytics-header">
+    <header class="analytics-header">
 
-            <div>
+        <div>
 
-                <span class="analytics-label">
-                    SMART TRAFFIC INTELLIGENCE
-                </span>
+            <span class="analytics-label">
+                SMART TRAFFIC INTELLIGENCE
+            </span>
 
-                <h1>
-                    Traffic Analytics
-                </h1>
+            <h1>
+                Traffic Analytics
+            </h1>
 
-                <p>
-                    Real-time traffic patterns,
-                    signal performance and
-                    optimization insights.
-                </p>
+            <p>
+                Analyse traffic behaviour,
+                identify congestion patterns and
+                measure optimization performance.
+            </p>
 
-            </div>
+        </div>
 
 
-            <div class="analytics-live">
+        <div class="analytics-live">
 
-                <span></span>
+            <span></span>
 
-                LIVE DATA
+            LIVE ANALYTICS
 
-            </div>
+        </div>
 
-        </header>
+    </header>
 
 
 
-        <!-- =====================================
-             KPI CARDS
-        ====================================== -->
+    <!-- =====================================
+         ANALYTICS CONTROLS
+    ====================================== -->
 
-        <section class="analytics-kpis">
+    <section class="analytics-controls">
 
+        <div class="control-box">
 
-            <!-- CURRENT DENSITY -->
+            <label for="metricSelect">
+                ANALYSE METRIC
+            </label>
 
-            <div class="analytics-card">
+            <select id="metricSelect">
 
-                <span>
-                    CURRENT DENSITY
-                </span>
+                <option value="density">
+                    Traffic Density
+                </option>
 
-                <h2 id="analyticsDensity">
-                    --%
-                </h2>
+                <option value="wait">
+                    Average Wait Time
+                </option>
 
-                <small>
-                    Current intersection load
-                </small>
+                <option value="vehicles">
+                    Vehicle Flow
+                </option>
 
-            </div>
+                <option value="score">
+                    Optimization Score
+                </option>
 
+            </select>
 
+        </div>
 
-            <!-- VEHICLES / HOUR -->
 
-            <div class="analytics-card">
 
-                <span>
-                    VEHICLES / HOUR
-                </span>
+        <div class="control-box">
 
-                <h2 id="analyticsVehicles">
-                    --
-                </h2>
+            <label for="intersectionSelect">
+                INTERSECTION
+            </label>
 
-                <small>
-                    Estimated traffic flow
-                </small>
+            <select id="intersectionSelect">
 
-            </div>
+                <option value="all">
+                    All Intersections
+                </option>
 
+                <option value="central">
+                    Central Ave × 5th
+                </option>
 
+                <option value="market">
+                    Market St × 3rd
+                </option>
 
-            <!-- WAIT TIME -->
+                <option value="park">
+                    Park Ave × 8th
+                </option>
 
-            <div class="analytics-card">
+                <option value="main">
+                    Main St × 2nd
+                </option>
 
-                <span>
-                    AVG WAIT TIME
-                </span>
+            </select>
 
-                <h2 id="analyticsWait">
-                    --s
-                </h2>
+        </div>
 
-                <small>
-                    Average vehicle delay
-                </small>
 
-            </div>
 
+        <div class="control-box">
 
+            <label for="timeRange">
 
-            <!-- OPTIMIZATION SCORE -->
+                TIME WINDOW
 
-            <div class="analytics-card">
+            </label>
 
-                <span>
-                    OPTIMIZATION SCORE
-                </span>
+            <select id="timeRange">
 
-                <h2 id="analyticsScore">
-                    --%
-                </h2>
+                <option value="30">
+                    Last 30 seconds
+                </option>
 
-                <small>
-                    Signal efficiency
-                </small>
+                <option value="60">
+                    Last 1 minute
+                </option>
 
-            </div>
+                <option value="120">
+                    Last 2 minutes
+                </option>
 
-        </section>
+                <option value="300">
+                    Last 5 minutes
+                </option>
 
+            </select>
 
+        </div>
 
-        <!-- =====================================
-             MAIN ANALYTICS
-        ====================================== -->
 
-        <section class="analytics-grid">
+        <button
+            type="button"
+            id="pauseAnalytics"
+            class="analytics-action"
+        >
+            ⏸ Pause Live Data
+        </button>
 
+    </section>
 
-            <!-- =================================
-                 TRAFFIC CHART
-            ================================== -->
 
-            <div class="analytics-panel chart-panel">
 
-                <div class="panel-heading">
+    <!-- =====================================
+         SELECTED METRIC SUMMARY
+    ====================================== -->
 
-                    <div>
+    <section class="analytics-summary">
 
-                        <span>
-                            LIVE TRAFFIC
-                        </span>
+        <div class="summary-card">
 
-                        <h2>
-                            Density Over Time
-                        </h2>
+            <span>
+                CURRENT
+            </span>
 
-                    </div>
+            <strong id="currentMetric">
+                --
+            </strong>
 
+            <small id="metricUnit">
+                --
+            </small>
 
-                    <span id="chartStatus">
-                        LIVE
-                    </span>
+        </div>
 
-                </div>
 
+        <div class="summary-card">
 
-                <div class="chart-container">
+            <span>
+                AVERAGE
+            </span>
 
-                    <canvas
-                        id="trafficChart"
-                    ></canvas>
+            <strong id="averageMetric">
+                --
+            </strong>
 
-                </div>
+            <small>
+                Selected time window
+            </small>
 
-            </div>
+        </div>
 
 
+        <div class="summary-card">
 
-            <!-- =================================
-                 DIRECTIONAL TRAFFIC
-            ================================== -->
+            <span>
+                PEAK
+            </span>
 
-            <div class="analytics-panel">
+            <strong id="peakMetric">
+                --
+            </strong>
 
-                <div class="panel-heading">
+            <small>
+                Highest recorded value
+            </small>
 
-                    <div>
+        </div>
 
-                        <span>
-                            DIRECTIONAL FLOW
-                        </span>
 
-                        <h2>
-                            Current Traffic
-                        </h2>
+        <div class="summary-card">
 
-                    </div>
+            <span>
+                TREND
+            </span>
 
-                </div>
+            <strong id="trendMetric">
+                --
+            </strong>
 
+            <small id="trendDescription">
+                Waiting for data
+            </small>
 
-                <div class="direction-list">
+        </div>
 
+    </section>
 
-                    <!-- NORTH -->
 
-                    <div class="direction-row">
 
-                        <div>
+    <!-- =====================================
+         MAIN ANALYTICS
+    ====================================== -->
 
-                            <strong>
-                                NORTH
-                            </strong>
+    <section class="analytics-main-grid">
 
-                            <div class="direction-bar">
 
-                                <span
-                                    id="northBar"
-                                ></span>
+        <!-- =================================
+             TREND GRAPH
+        ================================== -->
 
-                            </div>
-
-                        </div>
-
-                        <strong id="northValue">
-                            0
-                        </strong>
-
-                    </div>
-
-
-
-                    <!-- SOUTH -->
-
-                    <div class="direction-row">
-
-                        <div>
-
-                            <strong>
-                                SOUTH
-                            </strong>
-
-                            <div class="direction-bar">
-
-                                <span
-                                    id="southBar"
-                                ></span>
-
-                            </div>
-
-                        </div>
-
-                        <strong id="southValue">
-                            0
-                        </strong>
-
-                    </div>
-
-
-
-                    <!-- EAST -->
-
-                    <div class="direction-row">
-
-                        <div>
-
-                            <strong>
-                                EAST
-                            </strong>
-
-                            <div class="direction-bar">
-
-                                <span
-                                    id="eastBar"
-                                ></span>
-
-                            </div>
-
-                        </div>
-
-                        <strong id="eastValue">
-                            0
-                        </strong>
-
-                    </div>
-
-
-
-                    <!-- WEST -->
-
-                    <div class="direction-row">
-
-                        <div>
-
-                            <strong>
-                                WEST
-                            </strong>
-
-                            <div class="direction-bar">
-
-                                <span
-                                    id="westBar"
-                                ></span>
-
-                            </div>
-
-                        </div>
-
-                        <strong id="westValue">
-                            0
-                        </strong>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             BEFORE VS AFTER
-        ====================================== -->
-
-        <section class="analytics-panel comparison-panel">
+        <div class="analytics-panel large-panel">
 
             <div class="panel-heading">
 
                 <div>
 
                     <span>
-                        SMARTFLOW IMPACT
+                        HISTORICAL ANALYSIS
+                    </span>
+
+                    <h2 id="chartTitle">
+                        Traffic Density Over Time
+                    </h2>
+
+                </div>
+
+                <span
+                    id="chartStatus"
+                    class="chart-live"
+                >
+                    ● LIVE
+                </span>
+
+            </div>
+
+
+            <div class="analytics-chart-wrapper">
+
+                <canvas
+                    id="analyticsChart"
+                ></canvas>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             INSIGHTS
+        ================================== -->
+
+        <div class="analytics-panel insight-panel">
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <span>
+                        SYSTEM INSIGHT
                     </span>
 
                     <h2>
-                        Before vs After Optimization
+                        Traffic Intelligence
                     </h2>
 
                 </div>
@@ -371,287 +329,206 @@
             </div>
 
 
-            <div class="comparison-grid">
+            <div class="insight-main">
 
-
-                <!-- DENSITY -->
-
-                <div class="comparison-item">
-
-                    <span>
-                        TRAFFIC DENSITY
-                    </span>
-
-                    <div>
-
-                        <strong id="beforeDensity">
-                            78%
-                        </strong>
-
-                        <span>
-                            →
-                        </span>
-
-                        <strong
-                            class="after"
-                            id="afterDensity"
-                        >
-                            --%
-                        </strong>
-
-                    </div>
-
+                <div class="insight-icon">
+                    ✦
                 </div>
 
+                <div>
 
+                    <strong id="insightTitle">
+                        Analysing traffic...
+                    </strong>
 
-                <!-- WAIT -->
-
-                <div class="comparison-item">
-
-                    <span>
-                        WAIT TIME
-                    </span>
-
-                    <div>
-
-                        <strong id="beforeWait">
-                            52s
-                        </strong>
-
-                        <span>
-                            →
-                        </span>
-
-                        <strong
-                            class="after"
-                            id="afterWait"
-                        >
-                            --s
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- SCORE -->
-
-                <div class="comparison-item">
-
-                    <span>
-                        SIGNAL EFFICIENCY
-                    </span>
-
-                    <div>
-
-                        <strong id="beforeScore">
-                            61%
-                        </strong>
-
-                        <span>
-                            →
-                        </span>
-
-                        <strong
-                            class="after"
-                            id="afterScore"
-                        >
-                            --%
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             SIGNAL PERFORMANCE
-        ====================================== -->
-
-        <section class="analytics-grid">
-
-
-            <!-- SIGNAL TIMING -->
-
-            <div class="analytics-panel">
-
-                <div class="panel-heading">
-
-                    <div>
-
-                        <span>
-                            SIGNAL PERFORMANCE
-                        </span>
-
-                        <h2>
-                            Current Timing
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="timing-stats">
-
-
-                    <!-- GREEN TIME -->
-
-                    <div>
-
-                        <span>
-                            GREEN TIME
-                        </span>
-
-                        <strong id="analyticsGreen">
-                            --s
-                        </strong>
-
-                    </div>
-
-
-
-                    <!-- CURRENT PHASE -->
-
-                    <div>
-
-                        <span>
-                            CURRENT PHASE
-                        </span>
-
-                        <strong id="analyticsPhase">
-                            --
-                        </strong>
-
-                    </div>
-
-
-
-                    <!-- SIGNAL CHANGES -->
-
-                    <div>
-
-                        <span>
-                            SIGNAL CHANGES
-                        </span>
-
-                        <strong id="signalChanges">
-                            0
-                        </strong>
-
-                    </div>
-
+                    <p id="insightText">
+                        Waiting for enough traffic
+                        observations.
+                    </p>
 
                 </div>
 
             </div>
 
 
+            <div class="insight-stats">
 
-            <!-- SYSTEM STATUS -->
+                <div>
 
-            <div class="analytics-panel">
+                    <span>
+                        BUSIEST INTERSECTION
+                    </span>
 
-                <div class="panel-heading">
-
-                    <div>
-
-                        <span>
-                            SYSTEM STATUS
-                        </span>
-
-                        <h2>
-                            SmartFlow Engine
-                        </h2>
-
-                    </div>
+                    <strong id="busiestIntersection">
+                        --
+                    </strong>
 
                 </div>
 
 
-                <div class="engine-status">
+                <div>
+
+                    <span>
+                        PEAK LOAD
+                    </span>
+
+                    <strong id="peakLoad">
+                        --
+                    </strong>
+
+                </div>
 
 
-                    <div>
+                <div>
 
-                        <span class="status-online"></span>
+                    <span>
+                        PRIORITY
+                    </span>
 
-                        Traffic Engine
-
-                        <strong>
-                            ONLINE
-                        </strong>
-
-                    </div>
-
-
-
-                    <div>
-
-                        <span class="status-online"></span>
-
-                        Signal Controller
-
-                        <strong>
-                            ONLINE
-                        </strong>
-
-                    </div>
-
-
-
-                    <div>
-
-                        <span class="status-online"></span>
-
-                        Optimization Engine
-
-                        <strong>
-                            ONLINE
-                        </strong>
-
-                    </div>
-
+                    <strong id="priorityDirection">
+                        --
+                    </strong>
 
                 </div>
 
             </div>
 
-        </section>
+        </div>
 
-
-
-        <!-- =====================================
-             BACK TO DASHBOARD
-        ====================================== -->
-
-        <a
-            href="dashboard.html"
-            class="back-dashboard"
-        >
-            ← Back to Control Center
-        </a>
-
-
-    </div>
+    </section>
 
 
 
     <!-- =====================================
-         JAVASCRIPT
+         INTERSECTION COMPARISON
     ====================================== -->
 
-    <script src="../Js/traffic.js"></script>
+    <section class="analytics-panel comparison-panel">
 
-    <script src="../Js/analytics.js"></script>
+        <div class="panel-heading">
+
+            <div>
+
+                <span>
+                    NETWORK COMPARISON
+                </span>
+
+                <h2>
+                    Intersection Performance
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="intersectionComparison"
+            class="intersection-comparison"
+        ></div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         OPTIMIZATION IMPACT
+    ====================================== -->
+
+    <section class="analytics-panel impact-panel">
+
+        <div class="panel-heading">
+
+            <div>
+
+                <span>
+                    SMARTFLOW IMPACT
+                </span>
+
+                <h2>
+                    Optimization Performance
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="impact-grid">
+
+            <div class="impact-item">
+
+                <span>
+                    BEFORE OPTIMIZATION
+                </span>
+
+                <strong id="beforeValue">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="impact-arrow">
+                →
+            </div>
+
+
+            <div class="impact-item">
+
+                <span>
+                    CURRENT
+                </span>
+
+                <strong
+                    id="afterValue"
+                    class="after-value"
+                >
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="impact-item">
+
+                <span>
+                    IMPROVEMENT
+                </span>
+
+                <strong
+                    id="improvementValue"
+                    class="after-value"
+                >
+                    --
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         BACK
+    ====================================== -->
+
+    <a
+        href="dashboard.html"
+        class="back-dashboard"
+    >
+        ← Back to Control Center
+    </a>
+
+
+</div>
+
+
+<script src="../Js/traffic.js"></script>
+
+<script src="../Js/analytics.js"></script>
 
 
 </body>

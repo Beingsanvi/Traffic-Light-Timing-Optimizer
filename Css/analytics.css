@@ -315,3 +315,346 @@
     }
 
 }
+/* =========================================================
+   INTERACTIVE ANALYTICS
+========================================================= */
+
+.analytics-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 14px;
+    margin: 30px 0 20px;
+    align-items: end;
+}
+
+.control-box {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.control-box label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    color: #00f5a0;
+}
+
+.control-box select {
+    width: 100%;
+    min-height: 42px;
+    padding: 0 14px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    background: #151b1f;
+    color: #ffffff;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+}
+
+.control-box select:hover,
+.control-box select:focus {
+    border-color: #00f5a0;
+}
+
+.analytics-action {
+    min-height: 42px;
+    padding: 0 18px;
+    border: 1px solid rgba(0,245,160,0.35);
+    border-radius: 8px;
+    background: rgba(0,245,160,0.08);
+    color: #00f5a0;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.analytics-action:hover {
+    background: rgba(0,245,160,0.16);
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.analytics-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px;
+    background: #151b1f;
+}
+
+.summary-card span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    color: #7e8a93;
+    margin-bottom: 8px;
+}
+
+.summary-card strong {
+    display: block;
+    color: #ffffff;
+    font-size: 27px;
+    line-height: 1.2;
+}
+
+.summary-card small {
+    display: block;
+    margin-top: 7px;
+    color: #68747d;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   MAIN ANALYTICS
+========================================================= */
+
+.analytics-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.large-panel {
+    min-width: 0;
+}
+
+.analytics-chart-wrapper {
+    position: relative;
+    height: 360px;
+    padding: 12px 10px 10px;
+}
+
+#analyticsChart {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.chart-live {
+    color: #00f5a0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   INSIGHT PANEL
+========================================================= */
+
+.insight-main {
+    display: flex;
+    gap: 15px;
+    padding: 25px 0;
+}
+
+.insight-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(0,245,160,0.1);
+    color: #00f5a0;
+    font-size: 20px;
+}
+
+.insight-main strong {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.insight-main p {
+    color: #87929a;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 8px;
+}
+
+.insight-stats {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.insight-stats div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.insight-stats span {
+    color: #6f7b84;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.insight-stats strong {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   INTERSECTION COMPARISON
+========================================================= */
+
+.comparison-panel,
+.impact-panel {
+    margin-bottom: 16px;
+}
+
+.intersection-comparison {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-top: 8px;
+}
+
+.intersection-performance {
+    display: grid;
+    grid-template-columns: 220px 1fr 70px;
+    gap: 18px;
+    align-items: center;
+}
+
+.performance-name {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.performance-name strong {
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.performance-name small {
+    color: #68747d;
+    font-size: 10px;
+}
+
+.performance-bar {
+    height: 7px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.07);
+    overflow: hidden;
+}
+
+.performance-bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #00f5a0;
+    transition: width 0.5s ease;
+}
+
+.performance-score {
+    text-align: right;
+    color: #00f5a0;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   IMPACT
+========================================================= */
+
+.impact-grid {
+    display: grid;
+    grid-template-columns: 1fr 50px 1fr 1fr;
+    align-items: center;
+    gap: 15px;
+    padding-top: 10px;
+}
+
+.impact-item {
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.025);
+}
+
+.impact-item span {
+    display: block;
+    color: #6d7880;
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+}
+
+.impact-item strong {
+    color: #ffffff;
+    font-size: 25px;
+}
+
+.after-value {
+    color: #00f5a0 !important;
+}
+
+.impact-arrow {
+    text-align: center;
+    color: #00f5a0;
+    font-size: 25px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .analytics-controls {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .analytics-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .analytics-main-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .analytics-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .intersection-performance {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .impact-arrow {
+        transform: rotate(90deg);
+    }
+
+}
