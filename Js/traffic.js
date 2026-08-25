@@ -136,10 +136,6 @@ function calculateNetworkMetrics() {
                 intersection.west;
 
 
-            // -----------------------------
-            // DENSITY
-            // -----------------------------
-
             const maximumVehicles =
                 80 * 4;
 
@@ -156,10 +152,6 @@ function calculateNetworkMetrics() {
                 );
 
 
-            // -----------------------------
-            // WAIT TIME
-            // -----------------------------
-
             intersection.waitTime =
                 Math.max(
                     5,
@@ -169,10 +161,6 @@ function calculateNetworkMetrics() {
                     )
                 );
 
-
-            // -----------------------------
-            // DIRECTION LOAD
-            // -----------------------------
 
             const northSouth =
                 intersection.north +
@@ -191,10 +179,6 @@ function calculateNetworkMetrics() {
                 );
 
 
-            // -----------------------------
-            // OPTIMIZATION SCORE
-            // -----------------------------
-
             intersection.optimizationScore =
                 Math.max(
                     45,
@@ -207,10 +191,6 @@ function calculateNetworkMetrics() {
                     )
                 );
 
-
-            // -----------------------------
-            // GREEN TIME
-            // -----------------------------
 
             intersection.greenTime =
                 Math.max(
@@ -312,8 +292,7 @@ function updateNetworkDisplay() {
 
     let totalDensity = 0;
 
-    let highest =
-        null;
+    let highest = null;
 
 
     intersections.forEach(
@@ -335,10 +314,6 @@ function updateNetworkDisplay() {
             }
 
 
-            // =================================
-            // SCORE
-            // =================================
-
             const scoreElement =
                 document.getElementById(
                     `network-score-${intersection.id}`
@@ -353,10 +328,6 @@ function updateNetworkDisplay() {
 
             }
 
-
-            // =================================
-            // STATUS
-            // =================================
 
             const statusElement =
                 document.getElementById(
@@ -413,10 +384,6 @@ function updateNetworkDisplay() {
             }
 
 
-            // =================================
-            // MINI SIGNAL
-            // =================================
-
             const signalElement =
                 document.getElementById(
                     `network-signal-${intersection.id}`
@@ -466,10 +433,6 @@ function updateNetworkDisplay() {
     );
 
 
-    // =====================================
-    // NETWORK DENSITY
-    // =====================================
-
     const networkDensity =
         document.getElementById(
             "networkDensity"
@@ -489,10 +452,6 @@ function updateNetworkDisplay() {
 
     }
 
-
-    // =====================================
-    // HIGHEST LOAD
-    // =====================================
 
     const highestLoad =
         document.getElementById(
@@ -529,19 +488,11 @@ function calculateTraffic() {
         trafficState.west;
 
 
-    // =====================================
-    // VEHICLES / HOUR
-    // =====================================
-
     trafficState.vehiclesPerHour =
         Math.round(
             totalVehicles * 18
         );
 
-
-    // =====================================
-    // TRAFFIC DENSITY
-    // =====================================
 
     trafficState.density =
         Math.min(
@@ -555,10 +506,6 @@ function calculateTraffic() {
         );
 
 
-    // =====================================
-    // WAIT TIME
-    // =====================================
-
     trafficState.waitTime =
         Math.max(
             5,
@@ -568,10 +515,6 @@ function calculateTraffic() {
             )
         );
 
-
-    // =====================================
-    // OPTIMIZATION SCORE
-    // =====================================
 
     trafficState.optimizationScore =
         Math.max(
@@ -585,10 +528,6 @@ function calculateTraffic() {
             )
         );
 
-
-    // =====================================
-    // RECOMMENDED GREEN TIME
-    // =====================================
 
     trafficState.recommendedGreenTime =
         Math.max(
@@ -617,14 +556,11 @@ function simulateTraffic() {
     trafficState.north =
         randomTraffic(10, 70);
 
-
     trafficState.south =
         randomTraffic(10, 70);
 
-
     trafficState.east =
         randomTraffic(10, 70);
-
 
     trafficState.west =
         randomTraffic(10, 70);
@@ -714,9 +650,6 @@ function chooseBestPhase() {
     }
 
 
-    // Equal traffic:
-    // alternate phase
-
     return (
         trafficState.currentPhase === "NS"
             ? "EW"
@@ -786,10 +719,6 @@ function runSignalTimer() {
 
 function updateSignalDisplay() {
 
-    // =====================================
-    // COUNTDOWN
-    // =====================================
-
     const countdown =
         document.getElementById(
             "signalCountdown"
@@ -803,10 +732,6 @@ function updateSignalDisplay() {
 
     }
 
-
-    // =====================================
-    // LIGHTS
-    // =====================================
 
     const leftLight =
         document.querySelector(
@@ -840,10 +765,6 @@ function updateSignalDisplay() {
     }
 
 
-    // =====================================
-    // STATUS TEXT
-    // =====================================
-
     const statusElements =
         document.querySelectorAll(
             ".signal-status-row strong"
@@ -861,7 +782,6 @@ function updateSignalDisplay() {
             statusElements[0].textContent =
                 "GO";
 
-
             statusElements[1].textContent =
                 "STOP";
 
@@ -871,7 +791,6 @@ function updateSignalDisplay() {
 
             statusElements[0].textContent =
                 "STOP";
-
 
             statusElements[1].textContent =
                 "GO";
@@ -970,10 +889,6 @@ function setSignalLight(
 
 function updateDashboard() {
 
-    // =====================================
-    // KPI VALUES
-    // =====================================
-
     const density =
         document.getElementById(
             "trafficDensity"
@@ -1034,10 +949,6 @@ function updateDashboard() {
     }
 
 
-    // =====================================
-    // DENSITY PROGRESS
-    // =====================================
-
     const densityProgress =
         document.getElementById(
             "densityProgress"
@@ -1052,10 +963,6 @@ function updateDashboard() {
 
     }
 
-
-    // =====================================
-    // DENSITY STATUS
-    // =====================================
 
     const densityStatus =
         document.getElementById(
@@ -1102,10 +1009,6 @@ function updateDashboard() {
     }
 
 
-    // =====================================
-    // VEHICLE TREND
-    // =====================================
-
     const vehicleTrend =
         document.getElementById(
             "vehicleTrend"
@@ -1119,10 +1022,6 @@ function updateDashboard() {
 
     }
 
-
-    // =====================================
-    // OPTIMIZATION STATUS
-    // =====================================
 
     const optimizationStatus =
         document.getElementById(
@@ -1160,10 +1059,6 @@ function updateDashboard() {
     }
 
 
-    // =====================================
-    // WAIT TIME STATUS
-    // =====================================
-
     const waitTrend =
         document.getElementById(
             "waitTrend"
@@ -1177,10 +1072,6 @@ function updateDashboard() {
 
     }
 
-
-    // =====================================
-    // DIRECTIONAL TRAFFIC
-    // =====================================
 
     updateDirection(
         "northTraffic",
@@ -1209,10 +1100,6 @@ function updateDashboard() {
         trafficState.west
     );
 
-
-    // =====================================
-    // OPTIMIZER
-    // =====================================
 
     const recommendedTime =
         document.getElementById(
@@ -1296,6 +1183,13 @@ function updateDashboard() {
 
     updateSignalDisplay();
 
+
+    // =====================================
+    // UPDATE AI DECISION PANEL
+    // =====================================
+
+    updateAIDecision();
+
 }
 
 
@@ -1356,9 +1250,6 @@ function optimizeSignalTiming() {
         getEastWestTraffic();
 
 
-    // Calculate based on the
-    // busiest signal phase.
-
     const busiestLoad =
         Math.max(
             northSouth,
@@ -1386,8 +1277,6 @@ function optimizeSignalTiming() {
     trafficState.currentGreenTime =
         optimizedTime;
 
-
-    // Give green to the busier phase
 
     if (
         northSouth >
@@ -1480,16 +1369,199 @@ function connectOptimizer() {
 
 
 // =========================================
+// AI DECISION ENGINE
+// =========================================
+
+function updateAIDecision() {
+
+    const northSouth =
+        trafficState.north +
+        trafficState.south;
+
+
+    const eastWest =
+        trafficState.east +
+        trafficState.west;
+
+
+    const totalTraffic =
+        northSouth +
+        eastWest;
+
+
+    if (totalTraffic <= 0) {
+
+        return;
+
+    }
+
+
+    let priority;
+
+    let priorityTraffic;
+
+    let otherTraffic;
+
+
+    if (northSouth >= eastWest) {
+
+        priority =
+            "NORTH / SOUTH";
+
+        priorityTraffic =
+            northSouth;
+
+        otherTraffic =
+            eastWest;
+
+    }
+
+    else {
+
+        priority =
+            "EAST / WEST";
+
+        priorityTraffic =
+            eastWest;
+
+        otherTraffic =
+            northSouth;
+
+    }
+
+
+    const difference =
+        Math.round(
+            (
+                Math.abs(
+                    priorityTraffic -
+                    otherTraffic
+                ) /
+                totalTraffic
+            ) * 100
+        );
+
+
+    const recommended =
+        trafficState.recommendedGreenTime;
+
+
+    const waitReduction =
+        Math.max(
+            5,
+            Math.min(
+                35,
+                Math.round(
+                    difference * 0.8
+                )
+            )
+        );
+
+
+    const priorityElement =
+        document.getElementById(
+            "aiPriority"
+        );
+
+
+    if (priorityElement) {
+
+        priorityElement.textContent =
+            priority;
+
+    }
+
+
+    const differenceElement =
+        document.getElementById(
+            "aiTrafficDifference"
+        );
+
+
+    if (differenceElement) {
+
+        differenceElement.textContent =
+            difference +
+            "% higher";
+
+    }
+
+
+    const recommendedElement =
+        document.getElementById(
+            "aiRecommendedTime"
+        );
+
+
+    if (recommendedElement) {
+
+        recommendedElement.textContent =
+            recommended +
+            "s";
+
+    }
+
+
+    const reductionElement =
+        document.getElementById(
+            "aiWaitReduction"
+        );
+
+
+    if (reductionElement) {
+
+        reductionElement.textContent =
+            "~" +
+            waitReduction +
+            "%";
+
+    }
+
+
+    const messageElement =
+        document.getElementById(
+            "aiDecisionMessage"
+        );
+
+
+    if (messageElement) {
+
+        messageElement.textContent =
+            priority +
+            " currently has " +
+            difference +
+            "% more traffic. " +
+            "The adaptive controller recommends " +
+            recommended +
+            " seconds of green time " +
+            "for this phase.";
+
+    }
+
+
+    const statusElement =
+        document.getElementById(
+            "aiDecisionStatus"
+        );
+
+
+    if (statusElement) {
+
+        statusElement.textContent =
+            "LIVE ANALYSIS";
+
+    }
+
+}
+
+
+// =========================================
 // INITIALIZE SMARTFLOW
 // =========================================
 
 document.addEventListener(
     "DOMContentLoaded",
     () => {
-
-        // =================================
-        // MAIN INTERSECTION
-        // =================================
 
         calculateTraffic();
 
@@ -1509,25 +1581,13 @@ document.addEventListener(
         updateDashboard();
 
 
-        // =================================
-        // MULTI-INTERSECTION NETWORK
-        // =================================
-
         calculateNetworkMetrics();
 
         updateNetworkDisplay();
 
 
-        // =================================
-        // CONNECT BUTTON
-        // =================================
-
         connectOptimizer();
 
-
-        // =================================
-        // TRAFFIC UPDATE
-        // =================================
 
         setInterval(
             simulateTraffic,
@@ -1535,19 +1595,11 @@ document.addEventListener(
         );
 
 
-        // =================================
-        // NETWORK UPDATE
-        // =================================
-
         setInterval(
             simulateNetworkTraffic,
             3000
         );
 
-
-        // =================================
-        // SIGNAL TIMER
-        // =================================
 
         setInterval(
             runSignalTimer,

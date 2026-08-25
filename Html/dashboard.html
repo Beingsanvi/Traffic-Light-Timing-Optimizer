@@ -692,6 +692,103 @@
 
                 </button>
 
+                <!-- =====================================
+     AI DECISION
+====================================== -->
+
+<div class="ai-decision-card">
+
+    <div class="ai-decision-header">
+
+        <div>
+            <span class="panel-label">
+                AI DECISION
+            </span>
+
+            <h3>
+                Adaptive Traffic Analysis
+            </h3>
+        </div>
+
+        <span
+            class="ai-status"
+            id="aiDecisionStatus"
+        >
+            ANALYZING
+        </span>
+
+    </div>
+
+
+    <div class="ai-decision-grid">
+
+        <!-- PRIORITY -->
+        <div class="ai-decision-item">
+
+            <span>
+                PRIORITY
+            </span>
+
+            <strong id="aiPriority">
+                --
+            </strong>
+
+        </div>
+
+
+        <!-- TRAFFIC LOAD -->
+        <div class="ai-decision-item">
+
+            <span>
+                TRAFFIC LOAD
+            </span>
+
+            <strong id="aiTrafficDifference">
+                --
+            </strong>
+
+        </div>
+
+
+        <!-- GREEN TIME -->
+        <div class="ai-decision-item">
+
+            <span>
+                RECOMMENDED
+            </span>
+
+            <strong id="aiRecommendedTime">
+                --s
+            </strong>
+
+        </div>
+
+
+        <!-- ESTIMATED IMPROVEMENT -->
+        <div class="ai-decision-item">
+
+            <span>
+                EST. WAIT REDUCTION
+            </span>
+
+            <strong id="aiWaitReduction">
+                --%
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="ai-decision-message"
+        id="aiDecisionMessage"
+    >
+        Analyzing live traffic conditions...
+    </div>
+
+</div>
+
             </div>
 
         </section>

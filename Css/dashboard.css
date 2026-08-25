@@ -1598,3 +1598,169 @@ body {
         transform 0.5s ease;
 
 }
+/* =========================================
+   AI DECISION PANEL
+========================================= */
+
+.ai-decision-card {
+
+    margin-top: 18px;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(
+        0,
+        255,
+        190,
+        0.15
+    );
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 255, 190, 0.07),
+            rgba(10, 20, 25, 0.45)
+        );
+
+}
+
+
+.ai-decision-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+
+}
+
+
+.ai-decision-header h3 {
+
+    margin: 5px 0 0;
+
+    font-size: 17px;
+
+}
+
+
+.ai-status {
+
+    padding: 6px 10px;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #00ffbd;
+
+    border: 1px solid rgba(
+        0,
+        255,
+        190,
+        0.25
+    );
+
+    background: rgba(
+        0,
+        255,
+        190,
+        0.08
+    );
+
+}
+
+
+.ai-decision-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 10px;
+
+}
+
+
+.ai-decision-item {
+
+    padding: 12px;
+
+    border-radius: 9px;
+
+    background: rgba(
+        255,
+        255,
+        255,
+        0.025
+    );
+
+}
+
+
+.ai-decision-item span {
+
+    display: block;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    color: #78858a;
+
+    margin-bottom: 7px;
+
+}
+
+
+.ai-decision-item strong {
+
+    font-size: 15px;
+
+    color: #00ffbd;
+
+}
+
+
+.ai-decision-message {
+
+    margin-top: 14px;
+
+    padding-top: 13px;
+
+    border-top: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.06
+    );
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #aeb9bd;
+
+}
+
+
+@media (max-width: 800px) {
+
+    .ai-decision-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
