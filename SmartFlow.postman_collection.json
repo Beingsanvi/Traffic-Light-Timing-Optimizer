@@ -1,0 +1,233 @@
+{
+  "info": {
+    "name": "SmartFlow API",
+    "description": "SmartFlow Express API. Start the server, then run requests in order: Health, Signup, Login, protected requests, Logout. Postman's cookie jar stores the HttpOnly session cookie from Login automatically; keep the cookie jar enabled. Signup accepts 409 on repeated runs when the test account already exists. Change collection variables to use another server or account. Traffic updates change persisted demonstration data. MongoDB must be connected before the server can start.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": { "type": "noauth" },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api", "type": "string" },
+    { "key": "name", "value": "Postman Operator", "type": "string" },
+    { "key": "email", "value": "postman.operator@example.com", "type": "string" },
+    { "key": "password", "value": "postman-test-password", "type": "string" },
+    { "key": "intersection", "value": "central", "type": "string" },
+    { "key": "metric", "value": "density", "type": "string" },
+    { "key": "seconds", "value": "300", "type": "string" }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const expected = pm.info.requestName === 'Signup' ? [201, 409] : pm.info.requestName === 'Logout' ? [204] : [200];",
+          "pm.test('Expected response status', function () {",
+          "    pm.expect(pm.response.code).to.be.oneOf(expected);",
+          "});",
+          "if (pm.response.code !== 204) {",
+          "    pm.test('Response is JSON', function () {",
+          "        pm.response.to.be.json;",
+          "    });",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Health",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/health",
+            "description": "Public database readiness check. Expected: 200 with status ok and database connected."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 - Authentication",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"{{name}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/auth/signup",
+            "description": "Create the test account. Expected: 201; 409 means the email is already registered. Signup does not create a session."
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"remember\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/auth/login",
+            "description": "Expected: 200. Saves smartflow_session in Postman's cookie jar. No Bearer token or API key is needed."
+          },
+          "response": []
+        },
+        {
+          "name": "Current User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/auth/me",
+            "description": "Get the signed-in user. Run Login first."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 - Dashboard",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/dashboard",
+            "description": "Central traffic state, all four intersections, and the ten most recent events."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 - Intersections",
+      "item": [
+        {
+          "name": "All Intersections",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/intersections",
+            "description": "List the four intersection states."
+          },
+          "response": []
+        },
+        {
+          "name": "One Intersection",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/intersections/{{intersection}}",
+            "description": "Set intersection to central, market, park, or main in collection variables."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Traffic",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"north\": 40,\n  \"south\": 35,\n  \"east\": 20,\n  \"west\": 25\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/intersections/{{intersection}}/traffic",
+            "description": "Persist all four directional counts (required integers 0–80). Recalculates metrics and records a snapshot/event. Set SIMULATION_ENABLED=false on the server to prevent simulation ticks changing these values."
+          },
+          "response": []
+        },
+        {
+          "name": "Optimize Signal",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/intersections/{{intersection}}/optimize",
+            "description": "Apply adaptive green timing and record an optimization event. Returns the persisted intersection state."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 - Analytics and Events",
+      "item": [
+        {
+          "name": "Network Analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/analytics?metric={{metric}}&intersection=all&seconds={{seconds}}",
+            "description": "Stored network history. metric: density/wait/vehicles/score; seconds: integer 1–3600."
+          },
+          "response": []
+        },
+        {
+          "name": "Intersection Analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/analytics?metric={{metric}}&intersection={{intersection}}&seconds={{seconds}}",
+            "description": "Historical metrics for the selected intersection."
+          },
+          "response": []
+        },
+        {
+          "name": "Recent Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/events?limit=20",
+            "description": "Latest activity across the network. limit: integer 1–100."
+          },
+          "response": []
+        },
+        {
+          "name": "Intersection Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/events?intersection={{intersection}}&limit=20",
+            "description": "Activity filtered by the selected intersection."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06 - Logout (run last)",
+      "item": [
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": "{{baseUrl}}/auth/logout",
+            "description": "Revokes the session and clears its cookie. Expected: 204 with no response body. Log in again before testing protected requests."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
