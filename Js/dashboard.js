@@ -1,191 +1,62 @@
-// =========================================
-// SMARTFLOW DASHBOARD
-// =========================================
-
-
-// =========================================
-// CURRENT TIME
-// =========================================
-
-const currentTime =
-    document.getElementById("currentTime");
-
+const optimizeButton = document.getElementById('optimizeBtn');
+let mutationPending = false;
 
 function updateTime() {
-
-    const now = new Date();
-
-    currentTime.textContent =
-        now.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-        });
-
+    SmartFlowView.text('currentTime', new Date().toLocaleTimeString());
 }
-
-
 updateTime();
-
 setInterval(updateTime, 1000);
 
-
-// =========================================
-// USER NAME
-// =========================================
-
-const sidebarUser =
-    document.getElementById("sidebarUser");
-
-
-const storedUser =
-    JSON.parse(
-        localStorage.getItem("smartflowUser")
-    );
-
-
-if (storedUser && storedUser.name) {
-
-    sidebarUser.textContent =
-        storedUser.name;
-
+async function refreshDashboard() {
+    if (mutationPending) return;
+    try {
+        const data = await SmartFlowAPI.request('/dashboard');
+        if (!mutationPending) SmartFlowView.renderDashboard(data);
+        SmartFlowAPI.showError('');
+    } catch (error) {
+        if (error.status === 401) window.location.replace('login.html');
+        SmartFlowAPI.showError(`Live data unavailable: ${error.message}`);
+    }
 }
 
-
-// =========================================
-// SIGNAL COUNTDOWN
-// =========================================
-
-const signalCountdown =
-    document.getElementById("signalCountdown");
-
-
-let countdown = 27;
-
-
-setInterval(() => {
-
-    countdown--;
-
-    if (countdown <= 0) {
-
-        countdown = 30;
-
+optimizeButton.addEventListener('click', async () => {
+    mutationPending = true;
+    optimizeButton.disabled = true;
+    optimizeButton.textContent = 'OPTIMIZING...';
+    try {
+        await SmartFlowAPI.request('/intersections/central/optimize', { method: 'POST', body: '{}' });
+        SmartFlowView.renderDashboard(await SmartFlowAPI.request('/dashboard'));
+        SmartFlowAPI.showError('');
+    } catch (error) {
+        if (error.status === 401) window.location.replace('login.html');
+        SmartFlowAPI.showError(error.message);
+    } finally {
+        mutationPending = false;
+        optimizeButton.disabled = false;
+        optimizeButton.textContent = '✦ OPTIMIZE SIGNAL TIMING';
     }
+});
 
-    signalCountdown.textContent =
-        countdown;
-
-}, 1000);
-
-
-// =========================================
-// OPTIMIZATION VERSION OF FOR TIMINGS
-// =========================================
-
-const optimizeBtn =
-    document.getElementById("optimizeBtn");
-
-
-const optimizationScore =
-    document.getElementById("optimizationScore");
-
-
-const waitTime =
-    document.getElementById("waitTime");
-
-
-const greenTime =
-    document.getElementById("greenTime");
-
-
-const recommendedTime =
-    document.getElementById("recommendedTime");
-
-
-optimizeBtn.addEventListener(
-    "click",
-    () => {
-
-        optimizeBtn.textContent =
-            "⟳ OPTIMIZING...";
-
-        optimizeBtn.disabled = true;
-
-
-        let progress = 0;
-
-
-        const optimization =
-            setInterval(() => {
-
-                progress += 10;
-
-
-                if (progress >= 100) {
-
-                    clearInterval(
-                        optimization
-                    );
-
-
-                    optimizationScore.textContent =
-                        "94%";
-
-                    waitTime.textContent =
-                        "27s";
-
-                    greenTime.textContent =
-                        "48";
-
-                    recommendedTime.textContent =
-                        "48 seconds";
-
-
-                    optimizeBtn.textContent =
-                        "✓ SIGNAL OPTIMIZED";
-
-
-                    setTimeout(() => {
-
-                        optimizeBtn.textContent =
-                            "✦ OPTIMIZE SIGNAL TIMING";
-
-                        optimizeBtn.disabled =
-                            false;
-
-                    }, 2000);
-
-                }
-
-            }, 120);
-
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+        await SmartFlowAPI.request('/auth/logout', { method: 'POST', body: '{}' });
+        window.location.replace('login.html');
+    } catch (error) {
+        SmartFlowAPI.showError(error.message);
     }
-);
+});
 
-
-// =========================================
-// LOGOUT
-// =========================================
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-
-logoutBtn.addEventListener(
-    "click",
-    () => {
-
-        localStorage.removeItem(
-            "smartflowLoggedIn"
-        );
-
-        localStorage.removeItem(
-            "smartflowUser"
-        );
-
-        window.location.href =
-            "login.html";
-
+(async () => {
+    try {
+        const user = await SmartFlowAPI.requireUser();
+        SmartFlowView.text('sidebarUser', user.name);
+        document.querySelector('.user-avatar').textContent = user.name.slice(0, 2).toUpperCase();
+        const poll = async () => {
+            await refreshDashboard();
+            setTimeout(poll, 1000);
+        };
+        await poll();
+    } catch (error) {
+        if (error.status !== 401) SmartFlowAPI.showError(error.message);
     }
-);
+})();
