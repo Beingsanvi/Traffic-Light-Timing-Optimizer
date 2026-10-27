@@ -1,336 +1,90 @@
 # SmartFlow – Traffic Light Timing Optimizer
 
-SmartFlow is an intelligent traffic signal optimization system designed to monitor traffic conditions, analyze traffic flow, and recommend adaptive traffic signal timings.
+SmartFlow monitors a simulated four-intersection network, calculates adaptive signal timings, and displays live traffic and historical analytics.
 
-The project demonstrates how real-time traffic information can be used to improve traffic flow, reduce waiting time, and make traffic signal management more efficient.
+## Technology
 
----
+- **Frontend:** HTML, CSS, vanilla JavaScript (forms, API calls, and rendering)
+- **Backend:** Node.js 22+, Express 5 (authentication, simulation, signal control, optimization, and analytics)
+- **Database:** MongoDB with Mongoose models and indexes
+- **Authentication:** bcrypt password hashes and MongoDB-backed HttpOnly sessions
 
-## 🚦 Problem Statement
+## Run locally
 
-Traditional traffic signals often use fixed timing patterns. However, traffic conditions are constantly changing.
+```bash
+npm install
+npm run db:init
+npm start
+```
 
-For example, one direction may have heavy traffic while another direction has very few vehicles. Using the same signal timing in both situations can lead to:
+The existing `.env` is read automatically. For a fresh checkout, copy `.env.example` to `.env` and set your MongoDB driver connection URI:
 
-- Unnecessary waiting time
-- Traffic congestion
-- Uneven traffic distribution
-- Inefficient signal timing
-- Poor utilization of road capacity
+```dotenv
+MONGO_DB_URL=mongodb+srv://<database-user>:<password>@<cluster>/smartflow
+MONGO_DB_NAME=smartflow
+PORT=3000
+NODE_ENV=development
+SIMULATION_ENABLED=true
+```
 
-SmartFlow addresses this problem by monitoring traffic conditions and using traffic data to recommend more suitable signal timings.
+Open **http://localhost:3000**, create an account, and sign in. `npm run dev` starts Node's watch mode. `npm run db:init` creates the collections, indexes, and four seed intersections; startup also initializes them automatically without resetting existing data. MongoDB credentials stay on the server and `.env` is ignored by Git.
 
----
+API requests are logged in the server terminal with their method, endpoint, response status, and duration, for example: `GET /api/dashboard 200 12.3 ms`. Restart `npm start` after backend changes, or use `npm run dev` for automatic restarts.
 
-## 💡 Our Solution
+The app must run through Express rather than opening HTML files directly. Existing accounts from the localStorage prototype must be registered again.
 
-SmartFlow provides a centralized traffic management interface where an operator can:
+## Features
 
-- Monitor traffic conditions in real time
-- View vehicle flow and traffic density
-- Monitor different intersections
-- Analyze directional traffic
-- Receive signal timing recommendations
-- Optimize signal timing based on traffic conditions
-- Compare intersection performance
-- Analyze traffic trends through interactive analytics
-- Measure optimization performance
+- Persistent operator accounts, login, logout, and remembered sessions
+- Server-driven traffic simulation and green/yellow signal transitions
+- Directional traffic counts, density, estimated wait, flow, and optimization score
+- Optimized timing with persisted actor/activity events
+- Central dashboard and a consistent four-intersection network
+- MongoDB historical analytics filtered by metric, intersection, and time window
+- Pause/resume analytics display and recorded-baseline score comparison
 
----
+Simulation changes traffic every three ticks; signal state updates roughly every second. Set `SIMULATION_ENABLED=false` to send traffic counts through the API while retaining signal cycling and historical recording. The data and optimization estimates are demonstration heuristics.
 
-## ✨ Key Features
+## Documentation
 
-### 1. 🔐 Login & Authentication
+- [Postman collection](SmartFlow.postman_collection.json) and [copy-paste testing guide](docs/POSTMAN.md)
+- [API reference, endpoints, request/response examples, and cURL walkthrough](docs/API.md)
+- [Database collections, indexes, initialization, and traffic formulas](docs/DATABASE.md)
+- Running API documentation: **http://localhost:3000/api-docs**
+- Database readiness: **http://localhost:3000/api/health**
 
-SmartFlow provides a login interface through which users can access the traffic management system.
-
-### 2. 📊 Real-Time Dashboard
-
-The Dashboard provides a quick overview of the current traffic situation.
-
-It displays:
-
-- Traffic Density
-- Vehicles Per Hour
-- Average Wait Time
-- Optimization Score
-- Intersection Status
-- Signal Timing
-- Directional Traffic
-- Recent Events
-
-This allows an operator to understand the current condition of the traffic network at a glance.
-
-### 3. 🚦 Adaptive Signal Optimization
-
-SmartFlow analyzes traffic conditions and provides a recommended green-light duration.
-
-The system considers traffic flow and directional traffic load to determine where signal priority should be given.
-
-This allows signal timing to adapt to changing traffic conditions instead of relying only on fixed timing.
-
-### 4. 🚗 Directional Traffic Analysis
-
-The system monitors traffic from different directions:
-
-- North
-- South
-- East
-- West
-
-This helps identify which direction currently has a higher traffic load and may require greater signal priority.
-
-### 5. 🏙️ Intersection Monitoring
-
-SmartFlow allows multiple intersections to be monitored.
-
-Each intersection can be evaluated using traffic load and optimization performance.
-
-This helps operators identify intersections that are:
-
-- Optimal
-- Under Monitoring
-- Experiencing High Traffic Load
-
-### 6. 📈 Interactive Analytics
-
-The Analytics page provides a deeper understanding of traffic behavior over time.
-
-Users can select different metrics such as:
-
-- Traffic Density
-- Average Wait Time
-- Vehicle Flow
-- Optimization Score
-
-The analysis can also be filtered by:
-
-- Intersection
-- Time Window
-
-The page provides:
-
-- Current Value
-- Average Value
-- Peak Value
-- Traffic Trend
-- Traffic Intelligence
-- Intersection Performance
-- Optimization Performance
-
-The graph updates according to the selected metric and traffic conditions.
-
-### 7. 🧠 Traffic Intelligence
-
-SmartFlow provides traffic insights such as:
-
-- Busiest intersection
-- Peak traffic load
-- Direction requiring priority
-- Current traffic condition
-- Traffic trend
-
-These insights help operators make faster and more informed decisions.
-
-### 8. 📋 Optimization Performance
-
-The system provides a comparison between the traffic optimization baseline and the current optimization performance.
-
-This helps demonstrate whether the optimization process is improving the overall signal performance.
-
----
-
-## 🛠️ Technology Stack
-
-### Frontend
-
-- HTML5
-- CSS3
-- JavaScript
-
-### Data & Logic
-
-- JavaScript-based traffic simulation
-- Dynamic DOM manipulation
-- Real-time state updates
-- Interactive analytics
-- Adaptive signal optimization logic
-
-### Version Control
-
-- Git
-- GitHub
-
-### Deployment
-
-- Netlify
-
----
-
-## 📁 Project Structure
+## Project structure
 
 ```text
-SMARTFLOW/
-│
-├── Assets/
-│
-├── Css/
-│
-├── Js/
-│
-├── analytics.html
-├── dashboard.html
-├── index.html
-├── login.html
-├── signup.html
-│
-└── README.md
+server/
+  app.js           Express routes, authentication, and validation
+  config.js        Environment configuration
+  database.js      MongoDB connection and initialization
+  models.js        Users, sessions, intersections, snapshots, events
+  traffic.js       Simulation, signal control, optimizer, analytics
+  index.js         Server startup and shutdown
+  init-db.js       Database initialization command
+Js/                Browser API client and presentation logic
+Css/               Stylesheets
+Assets/            Images and branding
+docs/              API and database documentation
+test/              API/database integration tests
+*.html             Existing application pages
+```
 
+## Verification
 
+```bash
+npm run check
+npm test
+```
 
-## 🔄 System Workflow
+Integration tests use an isolated, temporary MongoDB process and do not connect to your Atlas database. The first test run downloads a MongoDB test binary and requires network access.
 
-```text
-User Login
-     ↓
-SmartFlow Dashboard
-     ↓
-Real-Time Traffic Monitoring
-     ↓
-Traffic Analysis
-     ↓
-Signal Timing Recommendation
-     ↓
-Signal Optimization
-     ↓
-Performance Monitoring
-     ↓
-Analytics
+## Deployment
 
+Deploy on a Node.js-capable host with the MongoDB environment variables configured, run `npm start`, and expose the application's port. Use a **single server instance** because it owns the simulation clock. Production requires HTTPS with `NODE_ENV=production`. Behind a reverse proxy, set `TRUST_PROXY` to its exact trusted hop count (usually `1`). Static-only Netlify hosting cannot run this Express backend; the browser pages now depend on its same-origin API.
 
+## Purpose
 
-##Analytics Workflow
-
-
-Live Traffic Data
-       ↓
-Select Metric
-       ↓
-Select Intersection
-       ↓
-Select Time Window
-       ↓
-Generate Traffic Trend
-       ↓
-Analyze Performance
-       ↓
-Measure Optimization Impact
-
-
-
-
-
-
-🎯 Project Objectives
-
-The main objectives of SmartFlow are:
-
-Monitor changing traffic conditions.
-Analyze traffic density and vehicle flow.
-Identify traffic congestion.
-Analyze traffic from different directions.
-Recommend adaptive signal timings.
-Monitor multiple intersections.
-Compare intersection performance.
-Analyze traffic trends.
-Measure the effect of optimization.
-Provide an easy-to-use traffic management interface.
-🚀 Future Scope
-
-SmartFlow can be further developed into a real-world intelligent traffic management system.
-
-📹 Real-Time Traffic Detection
-
-The current system can be extended by integrating:
-
-CCTV cameras
-IoT sensors
-Vehicle detection systems
-Traffic counting sensors
-
-This would allow the system to work with actual traffic data instead of simulated traffic data.
-
-🤖 Machine Learning
-
-Machine learning models could be introduced to predict traffic congestion before it occurs.
-
-Instead of only reacting to current traffic conditions, SmartFlow could predict future traffic patterns and proactively adjust signal timings.
-
-🚑 Emergency Vehicle Priority
-
-The system could detect emergency vehicles such as:
-
-Ambulances
-Fire trucks
-Police vehicles
-
-and automatically provide signal priority to reduce their travel time.
-
-🌆 City-Wide Traffic Management
-
-SmartFlow can be expanded from individual intersections to a coordinated city-wide traffic network.
-
-Multiple intersections could communicate with each other and coordinate signal timings to improve overall traffic flow.
-
-☁️ Cloud-Based Monitoring
-
-A cloud-based version could allow traffic authorities to:
-
-Monitor intersections remotely
-Access analytics from anywhere
-Store historical traffic data
-Compare different locations
-Monitor large-scale traffic networks
-📌 Current Project Status
-
-Status: Working Prototype
-
-The current version demonstrates:
-
-User login interface
-Real-time traffic simulation
-Traffic monitoring dashboard
-Directional traffic analysis
-Adaptive signal timing recommendations
-Intersection monitoring
-Interactive analytics
-Traffic intelligence
-Optimization performance comparison
-Netlify deployment
-🌐 Deployment
-
-SmartFlow is deployed as a web application using Netlify.
-
-The deployed application can be accessed through the project's Netlify deployment URL.
-
-👥 Project Team
-
-SmartFlow was developed as a collaborative project.
-
-The team worked across different areas including:
-
-Frontend development
-Dashboard development
-Traffic simulation
-Signal optimization
-Analytics
-UI/UX
-Testing
-Deployment
-🎓 Project Purpose
-
-SmartFlow was developed as an academic project to demonstrate the application of web technologies, traffic simulation, data analysis, and adaptive signal optimization in a smart traffic management system.
-
-📄 License
-
-This project is developed for educational and demonstration purposes.
+An educational prototype demonstrating traffic simulation, adaptive timing, persistent analytics, and a centralized traffic-management interface.
