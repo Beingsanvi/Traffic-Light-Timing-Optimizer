@@ -1,0 +1,29 @@
+{
+  "name": "smartflow",
+  "version": "2.0.0",
+  "private": true,
+  "description": "SmartFlow traffic management API and web application",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "db:init": "node server/init-db.js",
+    "test": "node --test",
+    "check": "node --check server/index.js && node --check server/app.js && node --check server/models.js && node --check server/traffic.js && node --check Js/api.js && node --check Js/auth.js && node --check Js/traffic.js && node --check Js/dashboard.js && node --check Js/analytics.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "mongoose": "^8.19.2",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "jsdom": "^27.0.1",
+    "mongodb-memory-server-core": "^10.3.0",
+    "supertest": "^7.1.4"
+  }
+}
